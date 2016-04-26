@@ -1,0 +1,8 @@
+The aim of this file is to define the scope of our project.
+1) Users: novice and intermediate users.
+2) Features of Minimum viable product(MVP)
+2.1 The system can generate a maze so that users can see all potential paths from entry point to exit.
+2.2 The system can generate an agent or a player and the agent can be moved travering the path
+2.3 The system can generate golds with some value in some cells
+... 
+3)Advanced features  
