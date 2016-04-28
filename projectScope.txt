@@ -16,7 +16,7 @@ The aim of this file is to define the scope of our project.
 3.4 Traps: Traps have opposite effect of gold taking off points from the users score
 3.5 Enemies: AI which try to 'attack' the user. Deducting points or sending the user back to the start when hit. Turn based implementation
 3.6 Leprechaun: AI which is trying to get away from the user. Increasing the players score if caught.
-3.7 Have description of AIs 
+3.7 Have descrBADF EDIT BAD EDITiption of AIs 
 3.8 Have nice graphics
 
 Project Plan
