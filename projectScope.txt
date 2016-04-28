@@ -4,8 +4,8 @@ The aim of this file is to define the scope of our project.
 2.1 The system can generate a maze
 2.2 Can see all potential paths from entry point to exit.
 2.3 The system can generate an agent or a player and the agent can travers the maze
-2.4 Score: Have initial score with every step takes a point off the score (so highest score is the best)
-2.5 The system can generate golds with some value in some cells
+2.4 Scoreboard: Have initial score with every step takes a point off the score (so highest score is the best)
+2.5 The system can generate golds (and traps?) with some value in some cells
 2.6 Levels of increasing difficulty: Difficulty corresponds to size/density of the maze. Once completed one, player progresses to the next level.
 2.7 Game menu: Start (choose starting level), quit
 ... 
