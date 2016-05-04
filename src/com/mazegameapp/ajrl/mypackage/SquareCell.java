@@ -73,35 +73,36 @@ public class SquareCell implements Cell{
 	
 	@Override
 	public void paintCell(Graphics g) {
-		g.setColor(Color.WHITE);
-        g.fillRect(xPos,yPos,width,width);
         g.setColor(Color.BLACK);
         g.drawRect(xPos,yPos,width,width);
-		
 	}
 	
 	public void removeRightWall(Graphics g) {
 		hasRightWall = false;
 		g.setColor(Color.WHITE);
-        g.drawLine(xPos+width, yPos, xPos+width,yPos+width);
+        g.drawLine(xPos+width, yPos+1, xPos+width,yPos+width-1);
 	}
 	
 	public void removeLeftWall(Graphics g) {
 		hasLeftWall = false;
 		g.setColor(Color.WHITE);
-        g.drawLine(xPos, yPos, xPos,yPos+width);
+        g.drawLine(xPos, yPos+1, xPos,yPos+width-1);
 	}
 	
 	public void removeBottomWall(Graphics g) {
 		hasButtomWall = false;
 		g.setColor(Color.WHITE);
-        g.drawLine(xPos, yPos+width, xPos+width, yPos+width);
+        g.drawLine(xPos+1, yPos+width, xPos+width-1, yPos+width);
 	}
 	
 	public void removeTopWall(Graphics g) {
 		hasTopWall = false;
 		g.setColor(Color.WHITE);
-        g.drawLine(xPos, yPos, xPos+width, yPos);
+        g.drawLine(xPos+1, yPos, xPos+width-1, yPos);
+	}
+	
+	public String toString() {
+		return String.format("cell components are: x = %d, y = %d, width = %d", xPos, yPos, width);
 	}
 }
 

@@ -11,22 +11,31 @@ import java.util.Set;
 
 public class GridMaze extends Maze{
 	private static final long serialVersionUID = 1L;
+	
 	// a predetermined arrangement of cells, a rectangular grid, default size is 10*10.
 	SquareCell[][] grid = new SquareCell[10][10];
 	
-	public SquareCell[][] getGrid() {
-		return grid;
-	}
-	
-	@Override
-	public void generateMaze(Graphics g) {
-		// Firstly, generate a grid
+	public void initializeGridMaze() {
+		// Firstly, initialize a grid
 		int width = (int)this.getParent().getPreferredSize().getWidth()/grid.length;
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid.length; j++) {
 				grid[i][j] = new SquareCell(i * width, j * width, width);
 			}
 		}
+	}
+	
+	public void setGridSize(int gridSize) {
+		grid = new SquareCell[gridSize][gridSize];
+	}
+	
+	public SquareCell[][] getGrid() {
+		return grid;
+	}
+
+	@Override
+	public void generateMaze(Graphics g) {
+		// first, draw a grid.
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid.length; j++) {
 				grid[i][j].paintCell(g);
@@ -36,8 +45,9 @@ public class GridMaze extends Maze{
 		//Then, using Depth-first search to remove adjacent wall between current cell and one of neighbors.
 		Set<SquareCell> visited = new HashSet<>();
 		Deque<SquareCell> stack = new ArrayDeque<>();
-		//mark the top left corner cell as the first visited cell, the entrance of the grid.
+		//mark the top left corner cell as the first visited cell, the entrance of the grid, remove the left wall.
 		SquareCell currentCell = grid[0][0];
+		currentCell.removeLeftWall(g);
 		visited.add(currentCell);
 		stack.push(currentCell);
 		// while there are unvisited cells
@@ -48,7 +58,6 @@ public class GridMaze extends Maze{
 				if (!visited.contains(neighbor)) {
 					stack.push(neighbor);
 					visited.add(neighbor);
-					System.out.println("the cell pushed into stack is :" + currentCell.getX() +","+ currentCell.getY());
 					//Remove the wall between the current cell and the chosen cell
 					if (currentCell.getX() < neighbor.getX()) {
 						// neighbor is in the right hand of currentCell
@@ -80,6 +89,8 @@ public class GridMaze extends Maze{
 				currentCell = stack.pop();
 			}
 		}
+		//set the bottom right corner cell the exit,remove right wall.
+		grid[grid.length-1][grid.length-1].removeRightWall(g);
 	}
 	
 	public List<SquareCell> getNeighbors(SquareCell currentCell, SquareCell[][] grid) {
