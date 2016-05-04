@@ -1,0 +1,16 @@
+Classes:
+Cell
+  SquareCell
+  TrapCell
+  GoldCell
+Maze
+  GridMaze
+MazeGame
+MyPanel
+Player
+  Human
+  Enemy
+Scoreboard
+Menu
+  
+  
