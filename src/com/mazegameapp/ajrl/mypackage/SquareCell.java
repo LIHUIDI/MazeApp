@@ -14,7 +14,7 @@ public class SquareCell implements Cell{
     private boolean hasButtomWall = true;
     private boolean hasLeftWall = true;
     private boolean hasRightWall = true;
-
+    
     public SquareCell(int xPos, int yPos, int width) {
     	this.xPos = xPos;
     	this.yPos = yPos;

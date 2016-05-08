@@ -56,10 +56,6 @@ public class MyPanel extends JPanel implements KeyListener{
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println("hiohio" + "key code = " + e.getKeyCode()
-        + " ("
-        + KeyEvent.getKeyText(e.getKeyCode())
-        + ")");
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			moveLeft();
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -84,10 +80,10 @@ public class MyPanel extends JPanel implements KeyListener{
 	private void moveUp() {
     	SquareCell cell = player.getCurrentCell();
 		if (!cell.hasTopWall()) {
-			squareX = cell.getX()+cell.getWidth()/4;
-		    squareY = cell.getY()+cell.getWidth()/4;
-		    squareW = cell.getWidth()/2;
-		    squareH = cell.getWidth()/2;
+			squareX = cell.getX()+2;
+		    squareY = cell.getY()+2;
+		    squareW = cell.getWidth()-4;
+		    squareH = cell.getWidth()-4;
 		    int OFFSET = 1;
 		    repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
 			//update current cell the player is in.
@@ -98,17 +94,16 @@ public class MyPanel extends JPanel implements KeyListener{
 		    squareH = cell.getWidth()/2;
 			player.setCurrentCell(cell);
 			repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
-			//cell.getX(),cell.getY(), cell.getWidth(), cell.getWidth()
 		}
 	}
 	
 	private void moveDown() {
 		SquareCell cell = player.getCurrentCell();
 		if (!cell.hasButtomWall()) {
-			squareX = cell.getX()+cell.getWidth()/4;
-		    squareY = cell.getY()+cell.getWidth()/4;
-		    squareW = cell.getWidth()/2;
-		    squareH = cell.getWidth()/2;
+			squareX = cell.getX()+2;
+		    squareY = cell.getY()+2;
+		    squareW = cell.getWidth()-4;
+		    squareH = cell.getWidth()-4;
 		    int OFFSET = 1;
 		    repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
 			//update current cell the player is in.
@@ -125,10 +120,10 @@ public class MyPanel extends JPanel implements KeyListener{
 	private void moveLeft() {
 		SquareCell cell = player.getCurrentCell();
 		if (!cell.hasLeftWall() && cell.getX() != 0) {
-			squareX = cell.getX()+cell.getWidth()/4;
-		    squareY = cell.getY()+cell.getWidth()/4;
-		    squareW = cell.getWidth()/2;
-		    squareH = cell.getWidth()/2;
+			squareX = cell.getX()+2;
+		    squareY = cell.getY()+2;
+		    squareW = cell.getWidth()-4;
+		    squareH = cell.getWidth()-4;
 		    int OFFSET = 1;
 		    repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
 			//update current cell the player is in.
@@ -145,10 +140,10 @@ public class MyPanel extends JPanel implements KeyListener{
 	private void moveRight() {
 		SquareCell cell = player.getCurrentCell();
 		if (!cell.hasRightWall() && cell.getX()/cell.getWidth() != gridMaze.getGrid().length - 1) {
-			squareX = cell.getX()+cell.getWidth()/4;
-		    squareY = cell.getY()+cell.getWidth()/4;
-		    squareW = cell.getWidth()/2;
-		    squareH = cell.getWidth()/2;
+			squareX = cell.getX()+2;
+		    squareY = cell.getY()+2;
+		    squareW = cell.getWidth()-4;
+		    squareH = cell.getWidth()-4;
 		    int OFFSET = 1;
 		    repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
 			//update current cell the player is in.

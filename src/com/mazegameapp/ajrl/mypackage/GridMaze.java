@@ -8,6 +8,7 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Random;
 
 public class GridMaze extends Maze{
 	private static final long serialVersionUID = 1L;
@@ -15,12 +16,24 @@ public class GridMaze extends Maze{
 	// a predetermined arrangement of cells, a rectangular grid, default size is 10*10.
 	SquareCell[][] grid = new SquareCell[10][10];
 	
+	//this could be changed to strategy pattern in the future such that different combinations of squareCell can be possible. 
 	public void initializeGridMaze() {
 		// Firstly, initialize a grid
 		int width = (int)this.getParent().getPreferredSize().getWidth()/grid.length;
+		Random randomGenerator = new Random();
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid.length; j++) {
-				grid[i][j] = new SquareCell(i * width, j * width, width);
+				//randomly assign some types of cell into grid.
+				int randomInt = randomGenerator.nextInt(10);
+				//80% possibility that grid will contain plain square cell.
+				if (randomInt <= 8) {
+					
+					grid[i][j] = new SquareCell(i * width, j * width, width);
+				} else {
+					Gold gold = new Gold();
+					gold.setValue(10);
+					grid[i][j] = new SquareCellWithItem(i * width, j * width, width, gold);
+				}
 			}
 		}
 	}
