@@ -1,11 +1,25 @@
 package com.mazegameapp.ajrl.mypackage;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Gold implements Item{
 	int value;
+	
+	private BufferedImage image;
 
+	private void loadImage() {
+	     try {                
+	        image = ImageIO.read(new File("resources/gold.png"));
+	     } catch (IOException ex) {
+	            // handle exception...
+	     }
+	}
+	
 	@Override
 	public int getValue() {
 		return value;
@@ -19,7 +33,7 @@ public class Gold implements Item{
 
 	@Override
 	public void drawItem(Graphics g, SquareCell squareCell) {
-		g.setColor(Color.YELLOW);
-		g.fillOval(squareCell.getX()+squareCell.getWidth()/4, squareCell.getY()+squareCell.getWidth()/2, squareCell.getWidth()/4, squareCell.getWidth()/2);
+		loadImage();
+		g.drawImage(image, squareCell.getX()+2, squareCell.getY()+2, squareCell.getWidth()-4, squareCell.getWidth()-4, null, null);
 	}
 }

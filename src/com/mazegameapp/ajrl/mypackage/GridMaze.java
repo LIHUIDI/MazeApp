@@ -24,15 +24,18 @@ public class GridMaze extends Maze{
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid.length; j++) {
 				//randomly assign some types of cell into grid.
-				int randomInt = randomGenerator.nextInt(10);
+				int randomInt = randomGenerator.nextInt(100);
 				//80% possibility that grid will contain plain square cell.
-				if (randomInt <= 8) {
-					
+				if (randomInt <= 90) {
 					grid[i][j] = new SquareCell(i * width, j * width, width);
-				} else {
+				} else if (randomInt <= 97 && randomInt > 90){
 					Gold gold = new Gold();
 					gold.setValue(10);
 					grid[i][j] = new SquareCellWithItem(i * width, j * width, width, gold);
+				} else {
+					Skull skull = new Skull();
+					skull.setValue(10);
+					grid[i][j] = new SquareCellWithItem(i * width, j * width, width, skull);
 				}
 			}
 		}

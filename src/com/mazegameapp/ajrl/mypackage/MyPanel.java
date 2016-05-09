@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel implements KeyListener{
@@ -15,7 +16,7 @@ public class MyPanel extends JPanel implements KeyListener{
 	 */
 	private static final long serialVersionUID = 1L;
 	private GridMaze gridMaze = new GridMaze();
-	Player player;
+	private Player player;
 	
 	private int squareX;
     private int squareY;
@@ -80,80 +81,77 @@ public class MyPanel extends JPanel implements KeyListener{
 	private void moveUp() {
     	SquareCell cell = player.getCurrentCell();
 		if (!cell.hasTopWall()) {
-			squareX = cell.getX()+2;
-		    squareY = cell.getY()+2;
-		    squareW = cell.getWidth()-4;
-		    squareH = cell.getWidth()-4;
-		    int OFFSET = 1;
-		    repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
+			squareX = cell.getX()+1;
+		    squareY = cell.getY()+1;
+		    squareW = cell.getWidth()-2;
+		    squareH = cell.getWidth()-2;
+		    repaint(squareX,squareY,squareW,squareH);
 			//update current cell the player is in.
 			cell = gridMaze.getGrid()[cell.getX()/cell.getWidth()][(cell.getY()- cell.getWidth())/cell.getWidth()];
-			squareX = cell.getX()+cell.getWidth()/4;
-		    squareY = cell.getY()+cell.getWidth()/4;
-		    squareW = cell.getWidth()/2;
-		    squareH = cell.getWidth()/2;
+			squareX = cell.getX()+1;
+		    squareY = cell.getY()+1;
+		    squareW = cell.getWidth()-2;
+		    squareH = cell.getWidth()-2;
 			player.setCurrentCell(cell);
-			repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
+			repaint(squareX,squareY,squareW,squareH);
 		}
 	}
 	
 	private void moveDown() {
 		SquareCell cell = player.getCurrentCell();
 		if (!cell.hasButtomWall()) {
-			squareX = cell.getX()+2;
-		    squareY = cell.getY()+2;
-		    squareW = cell.getWidth()-4;
-		    squareH = cell.getWidth()-4;
-		    int OFFSET = 1;
-		    repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
+			squareX = cell.getX()+1;
+		    squareY = cell.getY()+1;
+		    squareW = cell.getWidth()-2;
+		    squareH = cell.getWidth()-2;
+		    
+		    repaint(squareX,squareY,squareW,squareH);
 			//update current cell the player is in.
 			cell = gridMaze.getGrid()[(cell.getX())/cell.getWidth()][(cell.getY() + cell.getWidth())/cell.getWidth()];
-			squareX = cell.getX()+cell.getWidth()/4;
-		    squareY = cell.getY()+cell.getWidth()/4;
-		    squareW = cell.getWidth()/2;
-		    squareH = cell.getWidth()/2;
+			squareX = cell.getX()+1;
+		    squareY = cell.getY()+1;
+		    squareW = cell.getWidth()-2;
+		    squareH = cell.getWidth()-2;
 			player.setCurrentCell(cell);
-			repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
+			repaint(squareX,squareY,squareW,squareH);
 		}
 	}
 	
 	private void moveLeft() {
 		SquareCell cell = player.getCurrentCell();
 		if (!cell.hasLeftWall() && cell.getX() != 0) {
-			squareX = cell.getX()+2;
-		    squareY = cell.getY()+2;
-		    squareW = cell.getWidth()-4;
-		    squareH = cell.getWidth()-4;
-		    int OFFSET = 1;
-		    repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
+			squareX = cell.getX()+1;
+		    squareY = cell.getY()+1;
+		    squareW = cell.getWidth()-2;
+		    squareH = cell.getWidth()-2;
+		    repaint(squareX,squareY,squareW,squareH);
 			//update current cell the player is in.
 			cell = gridMaze.getGrid()[(cell.getX()- cell.getWidth())/cell.getWidth()][cell.getY()/cell.getWidth()];
-			squareX = cell.getX()+cell.getWidth()/4;
-		    squareY = cell.getY()+cell.getWidth()/4;
-		    squareW = cell.getWidth()/2;
-		    squareH = cell.getWidth()/2;
+			squareX = cell.getX()+1;
+		    squareY = cell.getY()+1;
+		    squareW = cell.getWidth()-2;
+		    squareH = cell.getWidth()-2;
 			player.setCurrentCell(cell);
-			repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
+			repaint(squareX,squareY,squareW,squareH);
 		}
 	}
 	
 	private void moveRight() {
 		SquareCell cell = player.getCurrentCell();
 		if (!cell.hasRightWall() && cell.getX()/cell.getWidth() != gridMaze.getGrid().length - 1) {
-			squareX = cell.getX()+2;
-		    squareY = cell.getY()+2;
-		    squareW = cell.getWidth()-4;
-		    squareH = cell.getWidth()-4;
-		    int OFFSET = 1;
-		    repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
+			squareX = cell.getX()+1;
+		    squareY = cell.getY()+1;
+		    squareW = cell.getWidth()-2;
+		    squareH = cell.getWidth()-2;
+		    repaint(squareX,squareY,squareW,squareH);
 			//update current cell the player is in.
 			cell = gridMaze.getGrid()[(cell.getX() + cell.getWidth())/cell.getWidth()][cell.getY()/cell.getWidth()];
-			squareX = cell.getX()+cell.getWidth()/4;
-		    squareY = cell.getY()+cell.getWidth()/4;
-		    squareW = cell.getWidth()/2;
-		    squareH = cell.getWidth()/2;
+			squareX = cell.getX()+1;
+		    squareY = cell.getY()+1;
+		    squareW = cell.getWidth()-2;
+		    squareH = cell.getWidth()-2;
 			player.setCurrentCell(cell);
-			repaint(squareX,squareY,squareW+OFFSET,squareH+OFFSET);
+			repaint(squareX,squareY,squareW,squareH);
 		}
 	}
 
