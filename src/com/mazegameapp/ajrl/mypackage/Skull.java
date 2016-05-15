@@ -14,7 +14,7 @@ int value;
 
 	private void loadImage() {
 	     try {                
-	        image = ImageIO.read(new File("resources/skull.png"));
+	        image = ImageIO.read(new File("resources/image/skull.png"));
 	     } catch (IOException ex) {
 	            // handle exception...
 	     }

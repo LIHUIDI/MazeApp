@@ -14,7 +14,7 @@ public class Gold implements Item{
 
 	private void loadImage() {
 	     try {                
-	        image = ImageIO.read(new File("resources/gold.png"));
+	        image = ImageIO.read(new File("resources/image/gold.png"));
 	     } catch (IOException ex) {
 	            // handle exception...
 	     }

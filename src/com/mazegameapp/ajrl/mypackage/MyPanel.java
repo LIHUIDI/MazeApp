@@ -7,64 +7,71 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class MyPanel extends JPanel implements KeyListener{
+public class MyPanel extends JPanel implements KeyListener, PlayerObserver{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	ControllerInterface controller;
+	// several model class
 	private GridMaze gridMaze = new GridMaze();
 	private Player player;
+	private boolean canDrawMaze = true;
+	private boolean playerMovement = false;
 	
-	private int squareX;
-    private int squareY;
-    private int squareW;
-    private int squareH;
-
-    public MyPanel() {
-        setBorder(BorderFactory.createLineBorder(Color.black));
-        this.setBackground(Color.white);
-        this.add(gridMaze);
-        this.addKeyListener(this);
-        this.setFocusable(true);
-        this.requestFocusInWindow();
+    public MyPanel(GridMaze gridMaze, Player player, ControllerInterface controller) {
+    	this.controller = controller;
+    	this.gridMaze = gridMaze;
+    	this.player = player;
+		this.player.registerplayerObservers(this);
+		setBorder(BorderFactory.createLineBorder(Color.black));
+        setBackground(Color.white);
+        addKeyListener(this);
+        setFocusable(true);
+        requestFocusInWindow();
     }
     
-    
-
     public Dimension getPreferredSize() {
-        return new Dimension(400,400);
+        return new Dimension(800,800);
+    }
+    
+    public void setCanDrawMaze(boolean a) {
+    	canDrawMaze = a;
     }
     
     public void paint(Graphics g) {
-        super.paintComponent(g);
-        if (player == null) {
-        	gridMaze.initializeGridMaze();
-            gridMaze.generateMaze(g);
-            player = new Player(gridMaze);
-            player.setCurrentCell((gridMaze.getGrid())[0][0]);
+    	super.paintComponent(g);
+        if (canDrawMaze) {
+        	drawGridMaze(g);
             player.paintPlayer(g);
+            canDrawMaze = false;
         } else {
-        	player.paintPlayer(g);
+        	if (playerMovement) {
+        		player.previousCell.paintCell(g);
+        		player.paintPlayer(g);
+        	}
+        	playerMovement = false;
         }
     }
+    
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			moveLeft();
+			controller.moveLeft();
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			moveRight();
+			controller.moveRight();
 		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
-			moveUp();
+			controller.moveUp();
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			moveDown();
+			controller.moveDown();
 		} else {
 			//
 			System.out.println("shouldn't be here");
@@ -78,81 +85,41 @@ public class MyPanel extends JPanel implements KeyListener{
 		
 	}
 	
-	private void moveUp() {
-    	SquareCell cell = player.getCurrentCell();
-		if (!cell.hasTopWall()) {
-			squareX = cell.getX()+1;
-		    squareY = cell.getY()+1;
-		    squareW = cell.getWidth()-2;
-		    squareH = cell.getWidth()-2;
-		    repaint(squareX,squareY,squareW,squareH);
-			//update current cell the player is in.
-			cell = gridMaze.getGrid()[cell.getX()/cell.getWidth()][(cell.getY()- cell.getWidth())/cell.getWidth()];
-			squareX = cell.getX()+1;
-		    squareY = cell.getY()+1;
-		    squareW = cell.getWidth()-2;
-		    squareH = cell.getWidth()-2;
-			player.setCurrentCell(cell);
-			repaint(squareX,squareY,squareW,squareH);
-		}
-	}
-	
-	private void moveDown() {
-		SquareCell cell = player.getCurrentCell();
-		if (!cell.hasButtomWall()) {
-			squareX = cell.getX()+1;
-		    squareY = cell.getY()+1;
-		    squareW = cell.getWidth()-2;
-		    squareH = cell.getWidth()-2;
-		    
-		    repaint(squareX,squareY,squareW,squareH);
-			//update current cell the player is in.
-			cell = gridMaze.getGrid()[(cell.getX())/cell.getWidth()][(cell.getY() + cell.getWidth())/cell.getWidth()];
-			squareX = cell.getX()+1;
-		    squareY = cell.getY()+1;
-		    squareW = cell.getWidth()-2;
-		    squareH = cell.getWidth()-2;
-			player.setCurrentCell(cell);
-			repaint(squareX,squareY,squareW,squareH);
-		}
-	}
-	
-	private void moveLeft() {
-		SquareCell cell = player.getCurrentCell();
-		if (!cell.hasLeftWall() && cell.getX() != 0) {
-			squareX = cell.getX()+1;
-		    squareY = cell.getY()+1;
-		    squareW = cell.getWidth()-2;
-		    squareH = cell.getWidth()-2;
-		    repaint(squareX,squareY,squareW,squareH);
-			//update current cell the player is in.
-			cell = gridMaze.getGrid()[(cell.getX()- cell.getWidth())/cell.getWidth()][cell.getY()/cell.getWidth()];
-			squareX = cell.getX()+1;
-		    squareY = cell.getY()+1;
-		    squareW = cell.getWidth()-2;
-		    squareH = cell.getWidth()-2;
-			player.setCurrentCell(cell);
-			repaint(squareX,squareY,squareW,squareH);
-		}
-	}
-	
-	private void moveRight() {
-		SquareCell cell = player.getCurrentCell();
-		if (!cell.hasRightWall() && cell.getX()/cell.getWidth() != gridMaze.getGrid().length - 1) {
-			squareX = cell.getX()+1;
-		    squareY = cell.getY()+1;
-		    squareW = cell.getWidth()-2;
-		    squareH = cell.getWidth()-2;
-		    repaint(squareX,squareY,squareW,squareH);
-			//update current cell the player is in.
-			cell = gridMaze.getGrid()[(cell.getX() + cell.getWidth())/cell.getWidth()][cell.getY()/cell.getWidth()];
-			squareX = cell.getX()+1;
-		    squareY = cell.getY()+1;
-		    squareW = cell.getWidth()-2;
-		    squareH = cell.getWidth()-2;
-			player.setCurrentCell(cell);
-			repaint(squareX,squareY,squareW,squareH);
+	private void drawGridMaze(Graphics g) {
+		SquareCell[][] grid = gridMaze.getGrid();
+		int width = (int)(this.getPreferredSize().getWidth()/grid.length);
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid.length; j++) {
+				grid[i][j].setX(i * width);
+				grid[i][j].setY(j * width);
+				grid[i][j].setWidth(width);
+				grid[i][j].paintCell(g);
+			}
 		}
 	}
 
+	@Override
+	public void finishMovement(boolean done) {
+		if (done) {
+			this.playerMovement = done;
+			SquareCell cell = player.getPreviousCell();
+			int squareX = cell.getX();
+		    int squareY = cell.getY();
+		    int squareW = cell.getWidth();
+		    int squareH = cell.getWidth();
+		    repaint(squareX,squareY,squareW,squareH);
+		    cell = player.getCurrentCell();
+		    squareX = cell.getX();
+		    squareY = cell.getY();
+		    squareW = cell.getWidth();
+		    squareH = cell.getWidth();
+		    repaint(squareX,squareY,squareW,squareH);
+		}
+	}
+	
+	public void finishSetting() {
+		SquareCell[][] grid = gridMaze.getGrid();
+		setCanDrawMaze(true);
+        repaint(0,0,this.getPreferredSize().height,this.getPreferredSize().height);
+	}
 }
