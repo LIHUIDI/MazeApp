@@ -178,5 +178,6 @@ public class Player{
 			item.updatePlayer(this);
 		}
 		this.score--;
+		scoreboard.update();
 	}
 }
