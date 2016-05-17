@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -46,13 +47,20 @@ public class MazeGameView{
 	    
 	    this.myPanelView = new MyPanel(gridMaze,player,controller);
 	    
+	    Dimension panelDimension = new Dimension(50, 60);
+	    
 	    JPanel fillerPanel = new JPanel();
-	    fillerPanel.setPreferredSize(new Dimension(50,60));
+	    fillerPanel.setPreferredSize(panelDimension);
 	    fillerPanel.setBackground(Color.BLUE);
 	    
+	    //Panel 3 can contain the scoreboard
 	    JPanel Panel3 = new JPanel();
-	    Panel3.setPreferredSize(new Dimension(50,60));
+	    Panel3.setPreferredSize(panelDimension);
 	    Panel3.setBackground(Color.red);
+	    //If we want more than one player can create a scoreboard for each player
+	    Scoreboard scoreboard = new Scoreboard(this.player);
+	    this.player.setScoreboard(scoreboard);
+	    Panel3.add(scoreboard);
 	    
 	    mainpane.add(fillerPanel);
 	    mainpane.add(myPanelView);
