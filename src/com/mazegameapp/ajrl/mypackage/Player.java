@@ -51,9 +51,6 @@ public class Player{
 			if ((previousCell instanceof SquareCellWithItem)) {
 				if (((SquareCellWithItem) previousCell).hasItem()) {
 					((SquareCellWithItem) previousCell).collectItem();
-					//Updates Players score according to value of that item
-					((SquareCellWithItem) previousCell).getItem().updatePlayer(this);
-					scoreboard.update();
 				}
 			}
 			//update current cell to next cell according to move direction.
@@ -62,9 +59,7 @@ public class Player{
 			done = true;
 			notifyAllObervers(done);
 			done = false;
-			//Subtract from score since made a move
-			score--;
-			scoreboard.update();
+			updateScore();
 		} else {
 			done = false;
 			notifyAllObervers(done);
@@ -78,9 +73,6 @@ public class Player{
 			if ((previousCell instanceof SquareCellWithItem)) {
 				if (((SquareCellWithItem) previousCell).hasItem()) {
 					((SquareCellWithItem) previousCell).collectItem();
-					//Updates Players score according to value of that item
-					((SquareCellWithItem) previousCell).getItem().updatePlayer(this);
-					scoreboard.update();
 				}
 			}
 			SquareCell newcell = gridMaze.getGrid()[(previousCell.getX())/previousCell.getWidth()][(previousCell.getY() + previousCell.getWidth())/previousCell.getWidth()];
@@ -88,8 +80,7 @@ public class Player{
 			done = true;
 			notifyAllObervers(done);
 			done = false;
-			score--;
-			scoreboard.update();
+			updateScore();
 		} else {
 			done = false;
 			notifyAllObervers(done);
@@ -103,9 +94,6 @@ public class Player{
 			if ((previousCell instanceof SquareCellWithItem)) {
 				if (((SquareCellWithItem) previousCell).hasItem()) {
 					((SquareCellWithItem) previousCell).collectItem();
-					//Updates Players score according to value of that item
-					((SquareCellWithItem) previousCell).getItem().updatePlayer(this);
-					scoreboard.update();
 				}
 			}
 			SquareCell newcell = gridMaze.getGrid()[(previousCell.getX()- previousCell.getWidth())/previousCell.getWidth()][previousCell.getY()/previousCell.getWidth()];
@@ -113,8 +101,7 @@ public class Player{
 			done = true;
 			notifyAllObervers(done);
 			done = false;
-			score--;
-			scoreboard.update();
+			updateScore();
 		} else {
 			done = false;
 			notifyAllObervers(done);
@@ -128,9 +115,6 @@ public class Player{
 			if ((previousCell instanceof SquareCellWithItem)) {
 				if (((SquareCellWithItem) previousCell).hasItem()) {
 					((SquareCellWithItem) previousCell).collectItem();
-					//Updates Players score according to value of that item
-					((SquareCellWithItem) previousCell).getItem().updatePlayer(this);
-					scoreboard.update();
 				}
 			}
 			SquareCell newcell = gridMaze.getGrid()[(previousCell.getX() + previousCell.getWidth())/previousCell.getWidth()][previousCell.getY()/previousCell.getWidth()];
@@ -138,8 +122,7 @@ public class Player{
 			done = true;
 			notifyAllObervers(done);
 			done = false;
-			score--;
-			scoreboard.update();
+			updateScore();
 		} else {
 			done = false;
 			notifyAllObervers(done);
@@ -187,5 +170,13 @@ public class Player{
 	
 	public int getScore() {
 		return this.score;
+	}
+	
+	private void updateScore() {
+		if (this.getCurrentCell() instanceof SquareCellWithItem) {
+			Item item = ((SquareCellWithItem) this.getCurrentCell()).getItem();
+			item.updatePlayer(this);
+		}
+		this.score--;
 	}
 }
