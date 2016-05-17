@@ -131,7 +131,7 @@ public class Player{
 	
 	public Player(GridMaze gridMaze) {
 		this.gridMaze = gridMaze;
-		this.score = 500;
+		this.score = 100;
 		//Hopefully no one will take over 500 moves (at least not with all the gold) every move subtracts a score
 	}
 	
