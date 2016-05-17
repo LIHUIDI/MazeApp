@@ -1,13 +1,12 @@
 The aim of this file is to define the scope of our project.
 1) Users: novice and intermediate users.
 2) Features of Minimum viable product(MVP)
-2.1 The system can generate a maze
-2.2 Can see all potential paths from entry point to exit.
-2.3 The system can generate an agent or a player and the agent can travers the maze
-2.4 Score: Have initial score with every step takes a point off the score (so highest score is the best)
-2.5 The system can generate golds with some value in some cells
-2.6 Levels of increasing difficulty: Difficulty corresponds to size/density of the maze. Once completed one, player progresses to the next level.
-2.7 Game menu: Start (choose starting level), quit
+2.1 The system can generate a maze so that users can see all potential paths from entry point to exit.
+2.2 The system can generate an agent or a player and the agent can travers the maze
+2.3 Scoreboard: Have initial score with every step takes a point off the score (so highest score is the best)
+2.4 The system can generate golds (and traps?) with some value in some cells
+2.5 Levels of increasing difficulty: Difficulty corresponds to size/density of the maze. Once completed one, player progresses to the next level.
+2.6 Game menu: Start (choose starting level), quit
 ... 
 3)Advanced features  
 3.1 Hints (shows first (or more) steps towards the goal)
@@ -16,7 +15,7 @@ The aim of this file is to define the scope of our project.
 3.4 Traps: Traps have opposite effect of gold taking off points from the users score
 3.5 Enemies: AI which try to 'attack' the user. Deducting points or sending the user back to the start when hit. Turn based implementation
 3.6 Leprechaun: AI which is trying to get away from the user. Increasing the players score if caught.
-3.7 Have descrBADF EDIT BAD EDITiption of AIs 
+3.7 Have description of AIs 
 3.8 Have nice graphics
 
 Project Plan
