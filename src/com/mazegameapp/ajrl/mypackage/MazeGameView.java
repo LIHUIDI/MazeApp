@@ -42,6 +42,9 @@ public class MazeGameView{
 	    f = new JFrame("Maze Game");
 	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 	    
+	    f.setSize(1500,1000);
+	    f.setVisible(true);
+	    
 	    JPanel mainpane = (JPanel) f.getContentPane();
 	    mainpane.setLayout(new BoxLayout(mainpane, BoxLayout.X_AXIS));
 	    
@@ -65,9 +68,6 @@ public class MazeGameView{
 	    mainpane.add(fillerPanel);
 	    mainpane.add(myPanelView);
 	    mainpane.add(Panel3);
-	    
-	    f.setSize(1500,1000);
-	    f.setVisible(true);
 	}
 	
 	public void createControls() {
