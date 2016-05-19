@@ -28,4 +28,8 @@ public class SquareCellWithItem extends SquareCell{
 			item.drawItem(g, this);
 		}
 	}
+
+	public Item getItem() {
+		return this.item;
+	}
 }

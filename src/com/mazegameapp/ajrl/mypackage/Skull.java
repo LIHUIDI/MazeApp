@@ -37,4 +37,10 @@ int value;
 		g.drawImage(image, squareCell.getX()+2, squareCell.getY()+2, squareCell.getWidth()-4, squareCell.getWidth()-4, null, null);
 	}
 
+	@Override
+	public void updatePlayer(Player p) {
+		p.subtractScore(value);
+		
+	}
+
 }

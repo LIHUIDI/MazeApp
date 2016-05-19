@@ -15,6 +15,8 @@ public class Player{
 	SquareCell cell;
 	private BufferedImage image;
 	ArrayList<PlayerObserver> playerObservers = new ArrayList<>();
+	private int score;
+	private Scoreboard scoreboard;
 	
 	//indicate some movement done or cann't do.
 	boolean done = false;
@@ -57,6 +59,7 @@ public class Player{
 			done = true;
 			notifyAllObervers(done);
 			done = false;
+			updateScore();
 		} else {
 			done = false;
 			notifyAllObervers(done);
@@ -77,6 +80,7 @@ public class Player{
 			done = true;
 			notifyAllObervers(done);
 			done = false;
+			updateScore();
 		} else {
 			done = false;
 			notifyAllObervers(done);
@@ -97,6 +101,7 @@ public class Player{
 			done = true;
 			notifyAllObervers(done);
 			done = false;
+			updateScore();
 		} else {
 			done = false;
 			notifyAllObervers(done);
@@ -117,6 +122,7 @@ public class Player{
 			done = true;
 			notifyAllObervers(done);
 			done = false;
+			updateScore();
 		} else {
 			done = false;
 			notifyAllObervers(done);
@@ -125,6 +131,12 @@ public class Player{
 	
 	public Player(GridMaze gridMaze) {
 		this.gridMaze = gridMaze;
+		this.score = 100;
+		//Hopefully no one will take over 500 moves (at least not with all the gold) every move subtracts a score
+	}
+	
+	public void setScoreboard(Scoreboard scoreboard) {
+		this.scoreboard = scoreboard;
 	}
 	
 	public void setCurrentCell(SquareCell cell) {
@@ -146,5 +158,26 @@ public class Player{
 	public void paintPlayer(Graphics g) {
 		loadImage();
 		g.drawImage(image, cell.getX()+1, cell.getY()+1, cell.getWidth()-2, cell.getWidth()-2, null, null);
+	}
+	
+	public void addScore(int i) {
+		this.score += i;
+	}
+	
+	public void subtractScore(int i) {
+		this.score -= i;
+	}
+	
+	public int getScore() {
+		return this.score;
+	}
+	
+	private void updateScore() {
+		if (this.getCurrentCell() instanceof SquareCellWithItem) {
+			Item item = ((SquareCellWithItem) this.getCurrentCell()).getItem();
+			item.updatePlayer(this);
+		}
+		this.score--;
+		scoreboard.update();
 	}
 }

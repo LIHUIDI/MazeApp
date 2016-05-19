@@ -6,4 +6,6 @@ public interface Item {
 	public int getValue();
 	public void setValue(int value);
 	public void drawItem(Graphics g, SquareCell squareCell);
+	public void updatePlayer(Player p);
+	
 }
