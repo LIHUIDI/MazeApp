@@ -174,8 +174,11 @@ public class Player{
 	
 	private void updateScore() {
 		if (this.getCurrentCell() instanceof SquareCellWithItem) {
-			Item item = ((SquareCellWithItem) this.getCurrentCell()).getItem();
-			item.updatePlayer(this);
+			SquareCellWithItem itemCell = (SquareCellWithItem) this.getCurrentCell();
+			if (itemCell.hasItem()) {
+				Item item = itemCell.getItem();
+				item.updatePlayer(this);
+			}
 		}
 		this.score--;
 		scoreboard.update();
