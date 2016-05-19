@@ -32,4 +32,12 @@ Week 12: Advanced features work
 Week 13:
   Thursday during Lab: Presentation
 
-
+TO DO WEEK 11-12:
+- Hints - Leon
+- Images - Jordan
+- Get menu to work with master branch - Anthony
+- Menu bar - Leo
+- Have finished Pop-up when hit finish - Rhys
+-Fix window resize issue - Leo
+- AI which moves randomly if on same block takes big score hit - Rhys
+- Teleport Leon
