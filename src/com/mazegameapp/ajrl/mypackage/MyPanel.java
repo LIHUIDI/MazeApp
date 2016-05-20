@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-public class MyPanel extends JPanel implements KeyListener, PlayerObserver{
+public class MyPanel extends JPanel implements KeyListener, PlayerMovementObserver{
 	/**
 	 * 
 	 */
@@ -32,7 +32,7 @@ public class MyPanel extends JPanel implements KeyListener, PlayerObserver{
     	this.controller = controller;
     	this.gridMaze = gridMaze;
     	this.player = player;
-		this.player.registerplayerObservers(this);
+		this.player.registerplayerMovementObservers(this);
 		try {                
 			myPanelimage = ImageIO.read(new File(myPanelImgPath));
 	     } catch (IOException ex) {

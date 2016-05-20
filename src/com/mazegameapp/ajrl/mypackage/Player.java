@@ -14,7 +14,8 @@ public class Player{
 	SquareCell previousCell;
 	SquareCell cell;
 	private BufferedImage image;
-	ArrayList<PlayerObserver> playerObservers = new ArrayList<>();
+	ArrayList<PlayerMovementObserver> playerMovementObservers = new ArrayList<>();
+	ArrayList<PlayerScoreObserver> playerScoreObservers = new ArrayList<>();
 
 	private static final int INI_SCORE = 100;
 	//move a step will minus 1 from player's score.
@@ -56,17 +57,31 @@ public class Player{
 	     }
 	}
 	
-	public void registerplayerObservers(PlayerObserver o) {
-		playerObservers.add(o);
+	public void registerplayerMovementObservers(PlayerMovementObserver o) {
+		playerMovementObservers.add(o);
 	}
 	
-	public void removeplayerObservers(PlayerObserver o) {
-		playerObservers.remove(o);
+	public void removeplayerMovementObservers(PlayerMovementObserver o) {
+		playerMovementObservers.remove(o);
 	}
 	
-	private void notifyAllObervers(boolean done) {
-		for (PlayerObserver o : playerObservers) {
+	public void registerplayerScoreObservers(PlayerScoreObserver o) {
+		playerScoreObservers.add(o);
+	}
+	
+	public void removeplayerScoreObservers(PlayerScoreObserver o) {
+		playerScoreObservers.remove(o);
+	}
+	
+	private void notifyAllPlayerMovementObervers(boolean done) {
+		for (PlayerMovementObserver o : playerMovementObservers) {
 			o.finishMovement(done);
+		}
+	}
+	
+	private void notifyAllPlayerScoreObervers(){
+		for (PlayerScoreObserver o : playerScoreObservers) {
+			o.updateScore();
 		}
 	}
 
@@ -88,11 +103,11 @@ public class Player{
 			done = true;
 			//since player moved a step, subtract score 1.
 			changeScore(MOVE_SCORE);
-			notifyAllObervers(done);
+			notifyAllPlayerMovementObervers(done);
 			done = false;
 		} else {
 			done = false;
-			notifyAllObervers(done);
+			notifyAllPlayerMovementObervers(done);
 		}
 	}
 	
@@ -110,11 +125,11 @@ public class Player{
 			this.setCurrentCell(newcell);
 			done = true;
 			changeScore(MOVE_SCORE);
-			notifyAllObervers(done);
+			notifyAllPlayerMovementObervers(done);
 			done = false;
 		} else {
 			done = false;
-			notifyAllObervers(done);
+			notifyAllPlayerMovementObervers(done);
 		}
 	}
 	
@@ -132,11 +147,11 @@ public class Player{
 			this.setCurrentCell(newcell);
 			done = true;
 			changeScore(MOVE_SCORE);
-			notifyAllObervers(done);
+			notifyAllPlayerMovementObervers(done);
 			done = false;
 		} else {
 			done = false;
-			notifyAllObervers(done);
+			notifyAllPlayerMovementObervers(done);
 		}
 	}
 	
@@ -154,11 +169,11 @@ public class Player{
 			this.setCurrentCell(newcell);
 			done = true;
 			changeScore(MOVE_SCORE);
-			notifyAllObervers(done);
+			notifyAllPlayerMovementObervers(done);
 			done = false;
 		} else {
 			done = false;
-			notifyAllObervers(done);
+			notifyAllPlayerMovementObervers(done);
 		}
 	}
 	
@@ -189,6 +204,11 @@ public class Player{
 	
 	private void changeScore(int i) {
 		this.score += i;
+	}
+	
+	public void reSetScore() {
+		score = INI_SCORE;
+		notifyAllPlayerScoreObervers();
 	}
 	
 	public int getScore() {

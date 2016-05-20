@@ -29,6 +29,7 @@ public class MazeGameView implements ActionListener{
 	
 	private JFrame f;
 	private MyPanel myPanelView;
+	private ScorePanel scorePanel;
 	
 	private JMenuBar menuBar;
 	private JMenu menu, settingMenu, difficultySettingMenu, themeSettingMenu;
@@ -71,7 +72,7 @@ public class MazeGameView implements ActionListener{
 	    fillerPanel.setPreferredSize(panelDimension);
 	    fillerPanel.setBackground(Color.BLUE);
 	    
-	    ScorePanel scorePanel = new ScorePanel();
+	    scorePanel = new ScorePanel();
 	    scorePanel.setPreferredSize(new Dimension(400,60));
 	    Scoreboard scoreboard = new Scoreboard(this.player);
 	    scorePanel.add(scoreboard);

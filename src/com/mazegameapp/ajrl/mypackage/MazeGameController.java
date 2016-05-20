@@ -34,6 +34,7 @@ public class MazeGameController implements ControllerInterface{
 		changeDifficulty(difficultyLevel);
 		gridMaze.initializeGridMaze();
 	    player.setCurrentCell((gridMaze.getGrid())[0][0]);
+	    player.reSetScore();
 		changeTheme(theme);
 		mazeGameView.getMazePanel().finishSetting();
 	}
