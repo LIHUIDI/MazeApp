@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -55,12 +56,16 @@ public class MazeGameView implements ActionListener{
 	    f.setResizable(false);
 	    f.setVisible(true);
 	    
+	    f.setSize(1500,1000);
+	    f.setVisible(true);
+	    
 	    JPanel mainpane = (JPanel) f.getContentPane();
 	    mainpane.setLayout(new BoxLayout(mainpane, BoxLayout.X_AXIS));
 	    
 	    this.myPanelView = new MyPanel(gridMaze,player,controller);
 	    myPanelView.setBackground(Color.yellow);
 	    
+
 	    FillerPanel fillerPanel = new FillerPanel();
 	    Dimension panelDimension = new Dimension(100, 60);
 	    fillerPanel.setPreferredSize(panelDimension);
@@ -71,12 +76,15 @@ public class MazeGameView implements ActionListener{
 	    Scoreboard scoreboard = new Scoreboard(this.player);
 	    scorePanel.add(scoreboard);
 	    scorePanel.setBackground(Color.RED);
+
 	    
 	    mainpane.setOpaque(true);
 	    mainpane.add(fillerPanel);
 	    mainpane.add(myPanelView);
+
 	    mainpane.add(scorePanel);
 	    
+
 	}
 	
 	public void createControls() {

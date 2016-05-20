@@ -1,3 +1,4 @@
+
 package com.mazegameapp.ajrl.mypackage;
 
 import java.awt.Font;
@@ -26,3 +27,4 @@ public class Scoreboard extends JLabel implements PlayerObserver{
 		}
 	}
 }
+

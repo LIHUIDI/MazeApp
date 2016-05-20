@@ -15,10 +15,12 @@ public class Player{
 	SquareCell cell;
 	private BufferedImage image;
 	ArrayList<PlayerObserver> playerObservers = new ArrayList<>();
+
 	private static final int INI_SCORE = 100;
 	//move a step will minus 1 from player's score.
 	private static final int MOVE_SCORE = -1;
 	private int score;
+
 	
 	//indicate some movement done or cann't do.
 	boolean done = false;
