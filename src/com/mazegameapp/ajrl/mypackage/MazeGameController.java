@@ -30,14 +30,12 @@ public class MazeGameController implements ControllerInterface{
 	//restart the game
 	@Override
 	public void reStartGame(String difficultyLevel, String theme) {
-		if (!difficultyLevel.toLowerCase().equals(Difficultylevel.BEGINNER.toString())) {
-			changeDifficulty(difficultyLevel);
-			gridMaze.initializeGridMaze();
-	        player.setCurrentCell((gridMaze.getGrid())[0][0]);
-		}
+		
+		changeDifficulty(difficultyLevel);
+		gridMaze.initializeGridMaze();
+	    player.setCurrentCell((gridMaze.getGrid())[0][0]);
 		changeTheme(theme);
 		mazeGameView.getMazePanel().finishSetting();
-		mazeGameView.disableReStartMenuItem();
 	}
 	
 	public void moveUp() {
@@ -65,11 +63,11 @@ public class MazeGameController implements ControllerInterface{
 	
 	private void changeDifficulty(String level) {
 		if (level.toLowerCase().equals(Difficultylevel.BEGINNER.toString())) {
-			//using the default size of grid, no need to set
+			gridMaze.setGridNum(10);
 			//set the proportion of common cell, gold cell and trap cell to default 60%, 30%, 10%
+			gridMaze.setCellRatio(60,30,10);
 		} else if (level.toLowerCase().equals(Difficultylevel.INTERMEDIATE.toString())) {
 			// set the grid size to 30 * 30
-			System.out.println("the grid desity is going to set to 30");
 			gridMaze.setGridNum(20);
 			//set the proportion of common cell, gold cell and trap cell to 70%, 20%, 10%
 			gridMaze.setCellRatio(70,20,10);
@@ -78,23 +76,25 @@ public class MazeGameController implements ControllerInterface{
 			gridMaze.setGridNum(40);
 			//set the proportion of common cell, gold cell and trap cell to 80%, 5%, 15%
 			gridMaze.setCellRatio(80,5,15);
+		} else {
+			// do nothing
 		}
-		
 	}
 
 	
 	private void changeTheme(String theme) {
 		SquareCell[][] grid = gridMaze.getGrid();
-		if (!theme.toLowerCase().equals(Theme.WINTER.toString())) {
-			
-			System.out.println("after generates the maze, now we change theme: grid legnth is " + grid.length);
+		
 			for (int i = 0; i < grid.length; i++) {
 				for (int j = 0; j < grid.length; j++) {
-					grid[i][j].changeSquareCellBackGroundImgPath(theme);
-					grid[i][j].changeWallImgs(theme);
+					grid[i][j].changeSquareCellBackGroundImgPath(theme.toLowerCase());
+					grid[i][j].changeWallImgs(theme.toLowerCase());
+					if (grid[i][j] instanceof SquareCellWithItem) {
+						((SquareCellWithItem)grid[i][j]).getItem().changeItemTheme(theme.toLowerCase());
+					}
 				}
 			}
-		}
+			player.changePlayerImgPath(theme);
 	}
 	
 	public enum Difficultylevel {

@@ -5,7 +5,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
@@ -21,14 +25,21 @@ public class MyPanel extends JPanel implements KeyListener, PlayerObserver{
 	private boolean canDrawMaze = true;
 	private boolean playerMovement = false;
 	
+	private BufferedImage myPanelimage;
+	private String myPanelImgPath = "resources/image/myPanel.png";
+	
     public MyPanel(GridMaze gridMaze, Player player, ControllerInterface controller) {
     	this.controller = controller;
     	this.gridMaze = gridMaze;
     	this.player = player;
 		this.player.registerplayerObservers(this);
-		setBorder(BorderFactory.createLineBorder(Color.black));
-        setBackground(Color.white);
+		try {                
+			myPanelimage = ImageIO.read(new File(myPanelImgPath));
+	     } catch (IOException ex) {
+	            // handle exception...
+	     }
         addKeyListener(this);
+        this.setSize(1000, 1000);
         setFocusable(true);
         requestFocusInWindow();
     }
@@ -43,6 +54,8 @@ public class MyPanel extends JPanel implements KeyListener, PlayerObserver{
     
     public void paint(Graphics g) {
     	super.paintComponent(g);
+    	g.drawImage(myPanelimage, 0, 0, 1000,1000,null,null);
+    	
         if (canDrawMaze) {
         	drawGridMaze(g);
             player.paintPlayer(g);
@@ -118,8 +131,7 @@ public class MyPanel extends JPanel implements KeyListener, PlayerObserver{
 	}
 	
 	public void finishSetting() {
-		SquareCell[][] grid = gridMaze.getGrid();
 		setCanDrawMaze(true);
-        repaint(0,0,this.getPreferredSize().height,this.getPreferredSize().height);
+        repaint(0,0,this.getSize().width,this.getSize().width);
 	}
 }

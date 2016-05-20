@@ -33,7 +33,6 @@ public class GridMaze{
 	public void setGridNum(int n){
 		this.gridNum = n;
 		grid = new SquareCell[gridNum][gridNum];
-		System.out.println("now the gird length become " + gridNum);
 	}
 	
 	public int getGridNum() {
@@ -64,9 +63,6 @@ public class GridMaze{
 	public void initializeGridMaze() {
 		// Firstly, initialize a grid
 		Random randomGenerator = new Random();
-		System.out.println("grid length is " + grid.length + "ratioOfCommonCell is " + ratioOfCommonCell 
-				+ "ratioOfCommonCell is " + ratioOfGoldCell
-				+ "ratioOfTrapCell is " + ratioOfTrapCell);
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid.length; j++) {
 				//randomly assign some types of cell into grid.
@@ -75,11 +71,9 @@ public class GridMaze{
 					grid[i][j] = new SquareCell(i, j, 1);
 				} else if (randomInt <= (ratioOfCommonCell +  ratioOfGoldCell) && randomInt > ratioOfCommonCell){
 					Gold gold = new Gold();
-					gold.setValue(10);
 					grid[i][j] = new SquareCellWithItem(i, j, 1, gold);
 				} else {
 					Skull skull = new Skull();
-					skull.setValue(10);
 					grid[i][j] = new SquareCellWithItem(i, j, 1, skull);
 				}
 			}

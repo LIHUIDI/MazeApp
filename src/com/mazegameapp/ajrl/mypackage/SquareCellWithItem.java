@@ -12,6 +12,10 @@ public class SquareCellWithItem extends SquareCell{
 		this.item = item;
 		hasItem = true;
 	}
+	
+	public Item getItem() {
+		return item;
+	}
 
 	public boolean hasItem() {
 		return hasItem;

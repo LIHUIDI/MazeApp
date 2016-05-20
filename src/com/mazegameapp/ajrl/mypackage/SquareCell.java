@@ -9,7 +9,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 
-public class SquareCell implements Cell{
+public class SquareCell{
 	
 	private int xPos;
     private int yPos;
@@ -31,6 +31,11 @@ public class SquareCell implements Cell{
 	private String bottomWallImag = "resources/image/winterdownwall.png";
     private String leftWallImag = "resources/image/winterleftwall.png";
     private String rightWallImag = "resources/image/winterrightwall.png";
+    
+    public SquareCell() {
+    	defineSquareCellBackGroudImage();
+    	defineWallImage();
+    }
     
     private void setTopWallImag(String topWallImag) {
 		this.topWallImag = topWallImag;
@@ -95,22 +100,22 @@ public class SquareCell implements Cell{
     	springWallImgs.put("right","resources/image/springrightwall.png");
     	wallImgs.put("spring", springWallImgs);
     	HashMap<String,String> summerWallImgs = new HashMap<>();
-    	springWallImgs.put("up", "resources/image/summerupwall.png");
-    	springWallImgs.put("down","resources/image/summerdownwall.png");
-    	springWallImgs.put("left","resources/image/summerleftwall.png");
-    	springWallImgs.put("right","resources/image/summerrightwall.png");
+    	summerWallImgs.put("up", "resources/image/summerupwall.png");
+    	summerWallImgs.put("down","resources/image/summerdownwall.png");
+    	summerWallImgs.put("left","resources/image/summerleftwall.png");
+    	summerWallImgs.put("right","resources/image/summerrightwall.png");
     	wallImgs.put("summer", summerWallImgs);
     	HashMap<String,String> autumnWallImgs = new HashMap<>();
-    	springWallImgs.put("up", "resources/image/autumnupwall.png");
-    	springWallImgs.put("down","resources/image/autumndownwall.png");
-    	springWallImgs.put("left","resources/image/autumnleftwall.png");
-    	springWallImgs.put("right","resources/image/autumnrightwall.png");
+    	autumnWallImgs.put("up", "resources/image/autumnupwall.png");
+    	autumnWallImgs.put("down","resources/image/autumndownwall.png");
+    	autumnWallImgs.put("left","resources/image/autumnleftwall.png");
+    	autumnWallImgs.put("right","resources/image/autumnrightwall.png");
     	wallImgs.put("autumn", autumnWallImgs);
     	HashMap<String,String> winterWallImgs = new HashMap<>();
-    	springWallImgs.put("up", "resources/image/winterupwall.png");
-    	springWallImgs.put("down","resources/image/winterdownwall.png");
-    	springWallImgs.put("left","resources/image/winterleftwall.png");
-    	springWallImgs.put("right","resources/image/winterrightwall.png");
+    	winterWallImgs.put("up", "resources/image/winterupwall.png");
+    	winterWallImgs.put("down","resources/image/winterdownwall.png");
+    	winterWallImgs.put("left","resources/image/winterleftwall.png");
+    	winterWallImgs.put("right","resources/image/winterrightwall.png");
     	wallImgs.put("winter", winterWallImgs);
     }
     
@@ -184,7 +189,6 @@ public class SquareCell implements Cell{
 		return 41 * (41 + (41 * (41 + xPos) + yPos)) + width;
 	}
 	
-	@Override
 	public void paintCell(Graphics g) {
 		 BufferedImage image = null;
 	     try {	 
@@ -218,7 +222,7 @@ public class SquareCell implements Cell{
 		BufferedImage bottomWallimage = null;
 		BufferedImage leftWallimage = null;
 		BufferedImage rightWallimage = null;
-	     try {	 
+	     try {
 	    	 topWallimage = ImageIO.read(new File(this.getTopWallImag()));
 	    	 bottomWallimage = ImageIO.read(new File(this.getBottomWallImag()));
 	    	 leftWallimage = ImageIO.read(new File(this.getLeftWallImag()));
