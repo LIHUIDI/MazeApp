@@ -21,7 +21,9 @@ public class Player{
 	//move a step will minus 1 from player's score.
 	private static final int MOVE_SCORE = -1;
 	private int score;
-
+	private int numberOfStep = 0;
+	private int numberOfGold = 0;
+	private int numberOfTrap = 0;
 	
 	//indicate some movement done or cann't do.
 	boolean done = false;
@@ -94,6 +96,11 @@ public class Player{
 				if (((SquareCellWithItem) previousCell).hasItem()) {
 					//update player's score based on the value of item of just visited cell
 					changeScore(((SquareCellWithItem) previousCell).getItem().getValue());
+					if (((SquareCellWithItem) previousCell).getItem() instanceof Skull) {
+						numberOfTrap++;
+					} else {
+						numberOfGold++;
+					}
 					((SquareCellWithItem) previousCell).collectItem();
 				}
 			}
@@ -103,6 +110,7 @@ public class Player{
 			done = true;
 			//since player moved a step, subtract score 1.
 			changeScore(MOVE_SCORE);
+			numberOfStep++;
 			notifyAllPlayerMovementObervers(done);
 			done = false;
 		} else {
@@ -118,6 +126,11 @@ public class Player{
 			if ((previousCell instanceof SquareCellWithItem)) {
 				if (((SquareCellWithItem) previousCell).hasItem()) {
 					changeScore(((SquareCellWithItem) previousCell).getItem().getValue());
+					if (((SquareCellWithItem) previousCell).getItem() instanceof Skull) {
+						numberOfTrap++;
+					} else {
+						numberOfGold++;
+					}
 					((SquareCellWithItem) previousCell).collectItem();
 				}
 			}
@@ -125,6 +138,7 @@ public class Player{
 			this.setCurrentCell(newcell);
 			done = true;
 			changeScore(MOVE_SCORE);
+			numberOfStep++;
 			notifyAllPlayerMovementObervers(done);
 			done = false;
 		} else {
@@ -140,6 +154,11 @@ public class Player{
 			if ((previousCell instanceof SquareCellWithItem)) {
 				if (((SquareCellWithItem) previousCell).hasItem()) {
 					changeScore(((SquareCellWithItem) previousCell).getItem().getValue());
+					if (((SquareCellWithItem) previousCell).getItem() instanceof Skull) {
+						numberOfTrap++;
+					} else {
+						numberOfGold++;
+					}
 					((SquareCellWithItem) previousCell).collectItem();
 				}
 			}
@@ -147,6 +166,7 @@ public class Player{
 			this.setCurrentCell(newcell);
 			done = true;
 			changeScore(MOVE_SCORE);
+			numberOfStep++;
 			notifyAllPlayerMovementObervers(done);
 			done = false;
 		} else {
@@ -162,6 +182,11 @@ public class Player{
 			if ((previousCell instanceof SquareCellWithItem)) {
 				if (((SquareCellWithItem) previousCell).hasItem()) {
 					changeScore(((SquareCellWithItem) previousCell).getItem().getValue());
+					if (((SquareCellWithItem) previousCell).getItem() instanceof Skull) {
+						numberOfTrap++;
+					} else {
+						numberOfGold++;
+					}
 					((SquareCellWithItem) previousCell).collectItem();
 				}
 			}
@@ -169,6 +194,7 @@ public class Player{
 			this.setCurrentCell(newcell);
 			done = true;
 			changeScore(MOVE_SCORE);
+			numberOfStep++;
 			notifyAllPlayerMovementObervers(done);
 			done = false;
 		} else {
@@ -208,10 +234,38 @@ public class Player{
 	
 	public void reSetScore() {
 		score = INI_SCORE;
+		numberOfStep = 0;
+		numberOfGold = 0;
+		numberOfTrap = 0;
 		notifyAllPlayerScoreObervers();
 	}
 	
 	public int getScore() {
 		return this.score;
 	}
+	
+	public int getNumberOfStep() {
+		return numberOfStep;
+	}
+
+	public void setNumberOfStep(int numberOfStep) {
+		this.numberOfStep = numberOfStep;
+	}
+
+	public int getNumberOfGold() {
+		return numberOfGold;
+	}
+
+	public void setNumberOfGold(int numberOfGold) {
+		this.numberOfGold = numberOfGold;
+	}
+
+	public int getNumberOfTrap() {
+		return numberOfTrap;
+	}
+
+	public void setNumberOfTrap(int numberOfTrap) {
+		this.numberOfTrap = numberOfTrap;
+	}
+
 }
