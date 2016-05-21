@@ -72,10 +72,8 @@ public class MazeGameView implements ActionListener{
 	    fillerPanel.setPreferredSize(panelDimension);
 	    fillerPanel.setBackground(Color.BLUE);
 	    
-	    scorePanel = new ScorePanel();
+	    scorePanel = new ScorePanel(this.player);
 	    scorePanel.setPreferredSize(new Dimension(400,60));
-	    Scoreboard scoreboard = new Scoreboard(this.player);
-	    scorePanel.add(scoreboard);
 	    scorePanel.setBackground(Color.RED);
 
 	    
@@ -84,8 +82,6 @@ public class MazeGameView implements ActionListener{
 	    mainpane.add(myPanelView);
 
 	    mainpane.add(scorePanel);
-	    
-
 	}
 	
 	public void createControls() {
