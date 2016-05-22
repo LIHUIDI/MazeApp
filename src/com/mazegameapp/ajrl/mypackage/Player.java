@@ -27,7 +27,7 @@ public class Player{
 	
 	//indicate some movement done or cann't do.
 	boolean done = false;
-	private HashMap<String, String> playerImgs = new HashMap <>();
+	protected HashMap<String, String> playerImgs = new HashMap <>();
 	private String playerImgPath = "resources/image/winterplayer.png"; //default cell background image.
 	
 	public Player(GridMaze gridMaze) {
@@ -44,7 +44,7 @@ public class Player{
 		this.playerImgPath = playerImgPath;
 	}
 
-	private void definePlayerImage() {
+	protected void definePlayerImage() {
 		playerImgs.put("spring", "resources/image/springplayer.png");
 		playerImgs.put("summer", "resources/image/summerplayer.png");
 		playerImgs.put("autumn", "resources/image/autumnplayer.png");
@@ -75,7 +75,7 @@ public class Player{
 		playerScoreObservers.remove(o);
 	}
 	
-	private void notifyAllPlayerMovementObervers(boolean done) {
+	protected void notifyAllPlayerMovementObervers(boolean done) {
 		for (PlayerMovementObserver o : playerMovementObservers) {
 			o.finishMovement(done);
 		}

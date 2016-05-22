@@ -22,17 +22,20 @@ public class MyPanel extends JPanel implements KeyListener, PlayerMovementObserv
 	// several model class
 	private GridMaze gridMaze = new GridMaze();
 	private Player player;
+	private Player enemy;
 	private boolean canDrawMaze = true;
 	private boolean playerMovement = false;
 	
 	private BufferedImage myPanelimage;
 	private String myPanelImgPath = "resources/image/myPanel.png";
 	
-    public MyPanel(GridMaze gridMaze, Player player, ControllerInterface controller) {
+    public MyPanel(GridMaze gridMaze, Player player, Player enemy, ControllerInterface controller) {
     	this.controller = controller;
     	this.gridMaze = gridMaze;
     	this.player = player;
+    	this.enemy = enemy;
 		this.player.registerplayerMovementObservers(this);
+		this.enemy.registerplayerMovementObservers(this);
 		try {                
 			myPanelimage = ImageIO.read(new File(myPanelImgPath));
 	     } catch (IOException ex) {
@@ -59,11 +62,14 @@ public class MyPanel extends JPanel implements KeyListener, PlayerMovementObserv
         if (canDrawMaze) {
         	drawGridMaze(g);
             player.paintPlayer(g);
+            enemy.paintPlayer(g);
             canDrawMaze = false;
         } else {
         	if (playerMovement) {
         		player.previousCell.paintCell(g);
         		player.paintPlayer(g);
+        		enemy.previousCell.paintCell(g);
+        		enemy.paintPlayer(g);
         	}
         	playerMovement = false;
         }
@@ -126,6 +132,19 @@ public class MyPanel extends JPanel implements KeyListener, PlayerMovementObserv
 		    squareY = cell.getY();
 		    squareW = cell.getWidth();
 		    squareH = cell.getWidth();
+		    repaint(squareX,squareY,squareW,squareH);
+		    
+		    SquareCell cellEnemy = enemy.getPreviousCell();
+		    squareX = cellEnemy.getX();
+		    squareY = cellEnemy.getY();
+		    squareW = cellEnemy.getWidth();
+		    squareH = cellEnemy.getWidth();
+		    repaint(squareX,squareY,squareW,squareH);
+		    cellEnemy = enemy.getCurrentCell();
+		    squareX = cellEnemy.getX();
+		    squareY = cellEnemy.getY();
+		    squareW = cellEnemy.getWidth();
+		    squareH = cellEnemy.getWidth();
 		    repaint(squareX,squareY,squareW,squareH);
 		}
 	}

@@ -26,6 +26,7 @@ public class MazeGameView implements ActionListener{
 	ControllerInterface controller;
 	private GridMaze gridMaze;
 	private Player player;
+	private Player enemy;
 	
 	private JFrame f;
 	private MyPanel myPanelView;
@@ -40,10 +41,11 @@ public class MazeGameView implements ActionListener{
 	private String themeSelected = "winter";
 	
 	
-	public MazeGameView (GridMaze gridMaze, Player player, ControllerInterface controller) {
+	public MazeGameView (GridMaze gridMaze, Player player, Player enemy, ControllerInterface controller) {
 		this.controller = controller;
     	this.gridMaze = gridMaze;
     	this.player = player;
+    	this.enemy = enemy;
     	
 	}
 	public MyPanel getMazePanel() {
@@ -57,13 +59,10 @@ public class MazeGameView implements ActionListener{
 	    f.setResizable(false);
 	    f.setVisible(true);
 	    
-	    f.setSize(1500,1000);
-	    f.setVisible(true);
-	    
 	    JPanel mainpane = (JPanel) f.getContentPane();
 	    mainpane.setLayout(new BoxLayout(mainpane, BoxLayout.X_AXIS));
 	    
-	    this.myPanelView = new MyPanel(gridMaze,player,controller);
+	    this.myPanelView = new MyPanel(gridMaze,player,enemy,controller);
 	    myPanelView.setBackground(Color.yellow);
 	    
 

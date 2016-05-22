@@ -5,6 +5,7 @@ import javax.swing.SwingUtilities;
 public class MazeGameController implements ControllerInterface{
 	GridMaze gridMaze;
 	Player player;
+	Player enemy;
 	// define four direction of movement of player.
 	private static final String UP = "up";
 	private static final String DOWN = "down";
@@ -21,7 +22,11 @@ public class MazeGameController implements ControllerInterface{
 		this.player = new Player(gridMaze);
         player.setCurrentCell((gridMaze.getGrid())[0][0]);
         
-		mazeGameView = new MazeGameView(gridMaze, player, this);
+        this.enemy = new EnemyAIPlayer(gridMaze);
+        enemy.setCurrentCell((gridMaze.getGrid())[gridMaze.getGridNum()-1][0]);
+        enemy.setPreviousCell((gridMaze.getGrid())[gridMaze.getGridNum()-1][0]);
+        
+		mazeGameView = new MazeGameView(gridMaze, player, enemy, this);
 		SwingUtilities.invokeLater(new Runnable() {
 	        public void run() {
 	        	mazeGameView.createAndShowGUI(); 
@@ -41,12 +46,15 @@ public class MazeGameController implements ControllerInterface{
 		gridMaze.initializeGridMaze();
 	    player.setCurrentCell((gridMaze.getGrid())[0][0]);
 	    player.reSetScore();
+	    enemy.setCurrentCell((gridMaze.getGrid())[gridMaze.getGridNum()-1][0]);
+	    enemy.setPreviousCell((gridMaze.getGrid())[gridMaze.getGridNum()-1][0]);
 		changeTheme(theme);
 		mazeGameView.getMazePanel().finishSetting();
 	}
 	
 	public void move(String direction) {
 		player.moveSelf(direction);
+		enemy.moveSelf(direction);
 	}
 	
 	/**
@@ -87,6 +95,7 @@ public class MazeGameController implements ControllerInterface{
 				}
 			}
 			player.changePlayerImgPath(theme);
+			enemy.changePlayerImgPath(theme);
 	}
 	
 	public enum Difficultylevel {
