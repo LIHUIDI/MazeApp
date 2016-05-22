@@ -5,6 +5,12 @@ import javax.swing.SwingUtilities;
 public class MazeGameController implements ControllerInterface{
 	GridMaze gridMaze;
 	Player player;
+	// define four direction of movement of player.
+	private static final String UP = "up";
+	private static final String DOWN = "down";
+	private static final String LEFT = "left";
+	private static final String RIGHT = "right";
+	
 	MazeGameView mazeGameView;
 	// indicate if user has changed the default difficult level.
 	
@@ -39,23 +45,8 @@ public class MazeGameController implements ControllerInterface{
 		mazeGameView.getMazePanel().finishSetting();
 	}
 	
-	public void moveUp() {
-		player.moveSelfUp();
-	}
-	
-	@Override
-	public void moveLeft() {
-		player.moveSelfLeft();
-	}
-	
-	@Override
-	public void moveRight() {
-		player.moveSelfRight();
-	}
-	
-	@Override
-	public void moveDown() {
-		player.moveSelfDown();
+	public void move(String direction) {
+		player.moveSelf(direction);
 	}
 	
 	/**

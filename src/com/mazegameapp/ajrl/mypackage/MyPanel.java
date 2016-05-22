@@ -78,13 +78,13 @@ public class MyPanel extends JPanel implements KeyListener, PlayerMovementObserv
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			controller.moveLeft();
+			controller.move("left");
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			controller.moveRight();
+			controller.move("right");
 		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
-			controller.moveUp();
+			controller.move("up");
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			controller.moveDown();
+			controller.move("down");
 		} else {
 			//
 			System.out.println("shouldn't be here");

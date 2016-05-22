@@ -87,8 +87,11 @@ public class Player{
 		}
 	}
 
-	public void moveSelfUp() {
-		if (!this.getCurrentCell().hasTopWall()) {
+	public void moveSelf(String direction) {
+		if ((direction.equals("up") && !this.getCurrentCell().hasTopWall())
+			|| (direction.equals("down") && !this.getCurrentCell().hasButtomWall())
+			|| (direction.equals("left") && (!this.getCurrentCell().hasLeftWall() && this.getCurrentCell().getX() != 0))
+			|| (direction.equals("right") && (!this.getCurrentCell().hasRightWall() && this.getCurrentCell().getX()/this.getCurrentCell().getWidth() != gridMaze.getGrid().length - 1))) {
 			//set previous cell to current cell
 			this.previousCell = this.getCurrentCell();
 			//collect item if old cell has item
@@ -105,94 +108,21 @@ public class Player{
 				}
 			}
 			//update current cell to next cell according to move direction.
-			SquareCell newcell = gridMaze.getGrid()[previousCell.getX()/previousCell.getWidth()][(previousCell.getY()- previousCell.getWidth())/previousCell.getWidth()];
+			SquareCell newcell = null;
+			if (direction.equals("up")) {
+				newcell = gridMaze.getGrid()[previousCell.getX()/previousCell.getWidth()][(previousCell.getY()- previousCell.getWidth())/previousCell.getWidth()];
+			} else if (direction.equals("down")) {
+				newcell = gridMaze.getGrid()[(previousCell.getX())/previousCell.getWidth()][(previousCell.getY() + previousCell.getWidth())/previousCell.getWidth()];
+			} else if (direction.equals("left")) {
+				newcell = gridMaze.getGrid()[(previousCell.getX()- previousCell.getWidth())/previousCell.getWidth()][previousCell.getY()/previousCell.getWidth()];
+			} else if (direction.equals("right")) {
+				newcell = gridMaze.getGrid()[(previousCell.getX() + previousCell.getWidth())/previousCell.getWidth()][previousCell.getY()/previousCell.getWidth()];
+			} else {
+				//shouldn't reach here.
+			}
 			this.setCurrentCell(newcell);
 			done = true;
 			//since player moved a step, subtract score 1.
-			changeScore(MOVE_SCORE);
-			numberOfStep++;
-			notifyAllPlayerMovementObervers(done);
-			done = false;
-		} else {
-			done = false;
-			notifyAllPlayerMovementObervers(done);
-		}
-	}
-	
-	public void moveSelfDown() {
-		if (!this.getCurrentCell().hasButtomWall()) {
-			this.previousCell = this.getCurrentCell();
-			//collect item if old cell has item
-			if ((previousCell instanceof SquareCellWithItem)) {
-				if (((SquareCellWithItem) previousCell).hasItem()) {
-					changeScore(((SquareCellWithItem) previousCell).getItem().getValue());
-					if (((SquareCellWithItem) previousCell).getItem() instanceof Skull) {
-						numberOfTrap++;
-					} else {
-						numberOfGold++;
-					}
-					((SquareCellWithItem) previousCell).collectItem();
-				}
-			}
-			SquareCell newcell = gridMaze.getGrid()[(previousCell.getX())/previousCell.getWidth()][(previousCell.getY() + previousCell.getWidth())/previousCell.getWidth()];
-			this.setCurrentCell(newcell);
-			done = true;
-			changeScore(MOVE_SCORE);
-			numberOfStep++;
-			notifyAllPlayerMovementObervers(done);
-			done = false;
-		} else {
-			done = false;
-			notifyAllPlayerMovementObervers(done);
-		}
-	}
-	
-	public void moveSelfLeft() {
-		if (!this.getCurrentCell().hasLeftWall() && this.getCurrentCell().getX() != 0) {
-			this.previousCell = this.getCurrentCell();
-			//collect item if old cell has item
-			if ((previousCell instanceof SquareCellWithItem)) {
-				if (((SquareCellWithItem) previousCell).hasItem()) {
-					changeScore(((SquareCellWithItem) previousCell).getItem().getValue());
-					if (((SquareCellWithItem) previousCell).getItem() instanceof Skull) {
-						numberOfTrap++;
-					} else {
-						numberOfGold++;
-					}
-					((SquareCellWithItem) previousCell).collectItem();
-				}
-			}
-			SquareCell newcell = gridMaze.getGrid()[(previousCell.getX()- previousCell.getWidth())/previousCell.getWidth()][previousCell.getY()/previousCell.getWidth()];
-			this.setCurrentCell(newcell);
-			done = true;
-			changeScore(MOVE_SCORE);
-			numberOfStep++;
-			notifyAllPlayerMovementObervers(done);
-			done = false;
-		} else {
-			done = false;
-			notifyAllPlayerMovementObervers(done);
-		}
-	}
-	
-	public void moveSelfRight() {
-		if (!this.getCurrentCell().hasRightWall() && this.getCurrentCell().getX()/this.getCurrentCell().getWidth() != gridMaze.getGrid().length - 1) {
-			this.previousCell = this.getCurrentCell();
-			//collect item if old cell has item
-			if ((previousCell instanceof SquareCellWithItem)) {
-				if (((SquareCellWithItem) previousCell).hasItem()) {
-					changeScore(((SquareCellWithItem) previousCell).getItem().getValue());
-					if (((SquareCellWithItem) previousCell).getItem() instanceof Skull) {
-						numberOfTrap++;
-					} else {
-						numberOfGold++;
-					}
-					((SquareCellWithItem) previousCell).collectItem();
-				}
-			}
-			SquareCell newcell = gridMaze.getGrid()[(previousCell.getX() + previousCell.getWidth())/previousCell.getWidth()][previousCell.getY()/previousCell.getWidth()];
-			this.setCurrentCell(newcell);
-			done = true;
 			changeScore(MOVE_SCORE);
 			numberOfStep++;
 			notifyAllPlayerMovementObervers(done);
