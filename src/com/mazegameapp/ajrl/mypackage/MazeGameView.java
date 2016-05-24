@@ -22,6 +22,16 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingUtilities;
 
+import com.mazegameapp.ajrl.mypackage.ActionData.Difficultylevel;
+import com.mazegameapp.ajrl.mypackage.ActionData.Theme;
+
+/**
+ * The top container of the View. It contains three Panels, 
+ * {@code MyPanel} is the panel where maze map sitting on, {@code ScorePanel} shows the progress information such as scores that player got,
+ * {@code FillerPanel} shows hint label where user want to check hint. 
+ * It also contains menu bar and menu items that supplies settings and other controls of the game such as restart and exit.
+ *
+ */
 public class MazeGameView implements ActionListener{
 	ControllerInterface controller;
 	private GridMaze gridMaze;
@@ -36,8 +46,8 @@ public class MazeGameView implements ActionListener{
 	private JMenuItem startMenuItem;
 	private JMenuItem exitMenuItem;
 	
-	private String difficultySelelcted = "beginner";
-	private String themeSelected = "winter";
+	private String difficultySelelcted = ActionData.Difficultylevel.BEGINNER.toString();
+	private String themeSelected = ActionData.Theme.WINTER.toString();
 	
 	
 	public MazeGameView (GridMaze gridMaze, Player player, ControllerInterface controller) {
@@ -46,10 +56,14 @@ public class MazeGameView implements ActionListener{
     	this.player = player;
     	
 	}
+	
 	public MyPanel getMazePanel() {
 		return myPanelView;
 	}
 	
+	/**
+	 * creates all the components and add them to the frame.
+	 */
 	public void createAndShowGUI() {
 	    f = new JFrame("Maze Game");
 	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
@@ -67,7 +81,7 @@ public class MazeGameView implements ActionListener{
 	    myPanelView.setBackground(Color.yellow);
 	    
 
-	    FillerPanel fillerPanel = new FillerPanel();
+	    FillerPanel fillerPanel = new FillerPanel(player,myPanelView);
 	    Dimension panelDimension = new Dimension(100, 60);
 	    fillerPanel.setPreferredSize(panelDimension);
 	    fillerPanel.setBackground(Color.BLUE);
@@ -82,8 +96,12 @@ public class MazeGameView implements ActionListener{
 	    mainpane.add(myPanelView);
 
 	    mainpane.add(scorePanel);
+	    myPanelView.requestFocusInWindow();
 	}
 	
+	/**
+	 * creates menu bar and all menu items and add them to the frame.
+	 */
 	public void createControls() {
 		menuBar = new JMenuBar();
 		
@@ -112,15 +130,15 @@ public class MazeGameView implements ActionListener{
 		//create difficulty level radioButton
 		JRadioButton beginnerButton = new JRadioButton("Beginner(B)");
 	    beginnerButton.setMnemonic(KeyEvent.VK_B);
-	    beginnerButton.setActionCommand("beginner");
+	    beginnerButton.setActionCommand(ActionData.Difficultylevel.BEGINNER.toString());
 	    beginnerButton.setSelected(true);
 	    JRadioButton intermediateButton = new JRadioButton("Intermediate(I)");
 	    intermediateButton.setMnemonic(KeyEvent.VK_I);
-	    intermediateButton.setActionCommand("intermediate");
+	    intermediateButton.setActionCommand(ActionData.Difficultylevel.INTERMEDIATE.toString());
 	    intermediateButton.setSelected(true);
 	    JRadioButton advancedButton = new JRadioButton("Advanced(A)");
 	    advancedButton.setMnemonic(KeyEvent.VK_A);
-	    advancedButton.setActionCommand("advanced");
+	    advancedButton.setActionCommand(ActionData.Difficultylevel.ADVANCED.toString());
 	    advancedButton.setSelected(true);
 	    
 	    beginnerButton.addActionListener(this);
@@ -141,19 +159,19 @@ public class MazeGameView implements ActionListener{
 	    
 	    JRadioButton springButton = new JRadioButton("Spring(P)");
 	    springButton.setMnemonic(KeyEvent.VK_P);
-	    springButton.setActionCommand("spring");
-	    //springButton.setSelected(true);
+	    springButton.setActionCommand(ActionData.Theme.SPRING.toString());
+	    
 	    JRadioButton summerButton = new JRadioButton("summer(U)");
 	    summerButton.setMnemonic(KeyEvent.VK_U);
-	    summerButton.setActionCommand("summer");
-	    //summerButton.setSelected(true);
+	    summerButton.setActionCommand(ActionData.Theme.SUMMER.toString());
+	    
 	    JRadioButton autumnButton = new JRadioButton("Autumn(M)");
 	    autumnButton.setMnemonic(KeyEvent.VK_M);
-	    autumnButton.setActionCommand("autumn");
-	    //autumnButton.setSelected(true);
+	    autumnButton.setActionCommand(ActionData.Theme.AUTUMN.toString());
+	   
 	    JRadioButton winterButton = new JRadioButton("winter(W)",true);
 	    winterButton.setMnemonic(KeyEvent.VK_W);
-	    winterButton.setActionCommand("winter");
+	    winterButton.setActionCommand(ActionData.Theme.WINTER.toString());
 	    winterButton.setSelected(true);
 	    
 	    springButton.addActionListener(this);
@@ -189,29 +207,31 @@ public class MazeGameView implements ActionListener{
 		startMenuItem.setEnabled(false);
 	}
 	
+	/**
+	 * Set the actions performed for menu items.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("newgame")) {
-			controller.reStartGame(difficultySelelcted, themeSelected);
+			controller.reStartGame(difficultySelelcted.toString(), themeSelected.toString());
 		} else if (e.getActionCommand().equals("exit")) {
 			System.exit(0);
-		} else if (e.getActionCommand().equals("beginner")) {
-			difficultySelelcted = "beginner";
-		} else if (e.getActionCommand().equals("intermediate")) {
-			difficultySelelcted = "intermediate";
-		} else if (e.getActionCommand().equals("advanced")) {
-			difficultySelelcted = "advanced";
-		} else if (e.getActionCommand().equals("spring")) {
-			themeSelected = "spring";
-		} else if (e.getActionCommand().equals("summer")) {
-			themeSelected = "summer";
-		} else if (e.getActionCommand().equals("autumn")) {
-			themeSelected = "autumn";
-		} else if (e.getActionCommand().equals("winter")){
-			themeSelected = "winter";
+		} else if (e.getActionCommand().equals(ActionData.Difficultylevel.BEGINNER.toString())) {
+			difficultySelelcted = ActionData.Difficultylevel.BEGINNER.toString();
+		} else if (e.getActionCommand().equals(ActionData.Difficultylevel.INTERMEDIATE.toString())) {
+			difficultySelelcted = ActionData.Difficultylevel.INTERMEDIATE.toString();
+		} else if (e.getActionCommand().equals(ActionData.Difficultylevel.ADVANCED.toString())) {
+			difficultySelelcted = ActionData.Difficultylevel.ADVANCED.toString();
+		} else if (e.getActionCommand().equals(ActionData.Theme.SPRING.toString())) {
+			themeSelected = ActionData.Theme.SPRING.toString();
+		} else if (e.getActionCommand().equals(ActionData.Theme.SUMMER.toString())) {
+			themeSelected = ActionData.Theme.SUMMER.toString();
+		} else if (e.getActionCommand().equals(ActionData.Theme.AUTUMN.toString())) {
+			themeSelected = ActionData.Theme.AUTUMN.toString();
+		} else if (e.getActionCommand().equals(ActionData.Theme.WINTER.toString())){
+			themeSelected = ActionData.Theme.WINTER.toString();
 		} else {
 			// do nothing
 		}
-		
 	}
 }

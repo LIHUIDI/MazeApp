@@ -8,8 +8,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Random;
-
-public class GridMaze{
+/**
+ * The concrete grid maze that holds square cells. It has same height and width, thus is a square grid.
+ */
+public class GridMaze {
 	private static final long serialVersionUID = 1L;
 	private static final int DEFAULT_GRID_SIZE = 10;
 	private int gridNum = DEFAULT_GRID_SIZE;
@@ -23,7 +25,7 @@ public class GridMaze{
 	
 	ArrayList<GridMazeObserver> gridMazeObservers = new ArrayList<>();
 			
-	// a predetermined arrangement of cells, a rectangular grid, default size is 10*10.
+	// a predetermined arrangement of cells, a rectangular grid.
 	SquareCell[][] grid = new SquareCell[gridNum][gridNum];
 	
 	/**
@@ -58,7 +60,7 @@ public class GridMaze{
 	}
 
 	/**
-	 * 
+	 * Put concrete cells into grid maze, and remove walls of cells to actually generates the maze.
 	 */
 	public void initializeGridMaze() {
 		// Firstly, initialize a grid
@@ -141,7 +143,7 @@ public class GridMaze{
 	}
 	
 	/**
-	 * corrects the hints in Square cells.
+	 * Corrects the hints in Square cells.
 	 * All cells along the shortest path from starting cell to ending cell are incorrect.
 	 * Each holds the reversed hint of the previous cell.
 	 */

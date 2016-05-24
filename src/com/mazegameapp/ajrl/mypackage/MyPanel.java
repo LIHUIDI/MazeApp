@@ -1,6 +1,5 @@
 package com.mazegameapp.ajrl.mypackage;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -10,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel implements KeyListener, PlayerMovementObserver{
@@ -78,13 +76,13 @@ public class MyPanel extends JPanel implements KeyListener, PlayerMovementObserv
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			controller.move("left");
+			controller.move(ActionData.MoveDirection.LEFT.toString());
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			controller.move("right");
+			controller.move(ActionData.MoveDirection.RIGHT.toString());
 		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
-			controller.move("up");
+			controller.move(ActionData.MoveDirection.UP.toString());
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			controller.move("down");
+			controller.move(ActionData.MoveDirection.DOWN.toString());
 		} else {
 			//
 			System.out.println("shouldn't be here");
