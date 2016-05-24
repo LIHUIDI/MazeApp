@@ -2,25 +2,18 @@ package com.mazegameapp.ajrl.mypackage;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.SwingUtilities;
 
 public class MazeGameView implements ActionListener{
 	ControllerInterface controller;
@@ -66,9 +59,9 @@ public class MazeGameView implements ActionListener{
 	    this.myPanelView = new MyPanel(gridMaze,player,controller);
 	    myPanelView.setBackground(Color.yellow);
 	    
-
-	    FillerPanel fillerPanel = new FillerPanel();
-	    Dimension panelDimension = new Dimension(100, 60);
+	    //penal on the left 
+	    FillerPanel fillerPanel = new FillerPanel(player,myPanelView);
+	    Dimension panelDimension = new Dimension(400, 60);
 	    fillerPanel.setPreferredSize(panelDimension);
 	    fillerPanel.setBackground(Color.BLUE);
 	    
@@ -82,6 +75,7 @@ public class MazeGameView implements ActionListener{
 	    mainpane.add(myPanelView);
 
 	    mainpane.add(scorePanel);
+	    myPanelView.requestFocusInWindow();
 	}
 	
 	public void createControls() {

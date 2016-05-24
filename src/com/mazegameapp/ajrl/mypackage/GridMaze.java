@@ -9,18 +9,20 @@ import java.util.List;
 import java.util.Set;
 import java.util.Random;
 
-public class GridMaze{
+public class GridMaze{//generate 那里需要加一下ratio 和 条件去造teleport cell。
 	private static final long serialVersionUID = 1L;
 	private static final int DEFAULT_GRID_SIZE = 10;
 	private int gridNum = DEFAULT_GRID_SIZE;
 	
 	private static final int DEFAULT_RATIO_COMMON_CELL = 60;
-	private static final int DEFAULT_RATIO_GOLD_CELL = 30;
+	private static final int DEFAULT_RATIO_GOLD_CELL = 26;
 	private static final int DEFAULT_RATIO_TRAP_CELL = 10;
+	private static final int DEFAULT_RATIO_Teleport_CELL = 4;
+
 	private int ratioOfCommonCell = DEFAULT_RATIO_COMMON_CELL;
 	private int ratioOfGoldCell = DEFAULT_RATIO_GOLD_CELL;
 	private int ratioOfTrapCell = DEFAULT_RATIO_TRAP_CELL;
-	
+	private int ratioOfTeleportCell = DEFAULT_RATIO_TRAP_CELL;
 	ArrayList<GridMazeObserver> gridMazeObservers = new ArrayList<>();
 			
 	// a predetermined arrangement of cells, a rectangular grid, default size is 10*10.

@@ -120,7 +120,17 @@ public class Player{
 			} else {
 				//shouldn't reach here.
 			}
+			
+			if(newcell instanceof SquareCellWithItem ){
+				Item i = ((SquareCellWithItem) newcell).getItem() ;
+				if(i instanceof Teleport){
+					newcell = ((Teleport) i).getToCell();
+				}
+			}
 			this.setCurrentCell(newcell);
+			
+				
+			
 			done = true;
 			//since player moved a step, subtract score 1.
 			changeScore(MOVE_SCORE);
