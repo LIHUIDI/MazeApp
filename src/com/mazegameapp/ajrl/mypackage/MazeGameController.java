@@ -38,10 +38,12 @@ public class MazeGameController implements ControllerInterface{
 		gridMaze.initializeGridMaze();
 	    player.setCurrentCell((gridMaze.getGrid())[0][0]);
 	    player.reSetScore();
+	    player.unfreezePlayer();
 	    stopTimer();
 		changeTheme(theme);
 		mazeGameView.getMazePanel().finishSetting();
 		mazeGameView.enableStartTimerMenuItem();
+		mazeGameView.cancelFinishedMessage();
 	}
 	
 	@Override

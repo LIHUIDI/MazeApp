@@ -268,4 +268,9 @@ public class MazeGameView implements ActionListener{
 			// do nothing
 		}
 	}
+
+	public void cancelFinishedMessage() {
+		scorePanel.resetFinishedBoard();
+		
+	}
 }
