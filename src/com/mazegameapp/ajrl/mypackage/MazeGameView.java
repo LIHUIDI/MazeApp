@@ -238,13 +238,11 @@ public class MazeGameView implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("once,once");
 		if (e.getActionCommand().equals("newgame")) {
 			controller.reStartGame(difficultySelelcted.toString(), themeSelected.toString());
 		} else if (e.getActionCommand().equals("exit")) {
 			System.exit(0);
 		} else if (e.getActionCommand().equals("startTimer")) {
-			System.out.println("when start the timer, the time is " + Integer.parseInt(timeSelected));
 			controller.startTimer(Integer.parseInt(timeSelected));
 		} else if (e.getSource() instanceof JComboBox) {
 			System.out.println("user has selected timer");
@@ -267,5 +265,9 @@ public class MazeGameView implements ActionListener{
 		} else {
 			// do nothing
 		}
+	}
+	
+	public void cancelFinishedMessage() {
+		 scorePanel.resetFinishedBoard();
 	}
 }

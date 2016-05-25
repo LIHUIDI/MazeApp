@@ -19,10 +19,10 @@ public class ScorePanel extends JPanel implements PlayerScoreObserver, PlayerMov
 	
 	private BufferedImage scorePanelimage;
 	private String scorePanelImgPath = "resources/image/scorePanel.png";
-	private JLabel scoreboard, trapBoard, goldBoard, stepBoard, timerboard;
+	private JLabel scoreboard, trapBoard, goldBoard, stepBoard, timerboard, finishedBoard;
 	
 	public ScorePanel(Player player, Timer timer) {
-		super(new GridLayout(6,1));
+		super(new GridLayout(7,1));
 		this.player = player;
 		this.player.registerplayerMovementObservers(this);
 		this.player.registerplayerScoreObservers(this);
@@ -41,7 +41,8 @@ public class ScorePanel extends JPanel implements PlayerScoreObserver, PlayerMov
 		ImageIcon goldBoardIcon = new ImageIcon("resources/image/goldIcon.png","gold");
 		ImageIcon stepBoardIcon = new ImageIcon("resources/image/stepIcon.png", "step");
 		ImageIcon timerBoardIcon = new ImageIcon("resources/image/timer.png", "timer");
-              
+		ImageIcon finishedBoardIcon = new ImageIcon("resources/image/finishedIcon.png", "finished");
+		
 		scoreboard = new JLabel("Score",scoreboardIcon,JLabel.CENTER);
 		scoreboard.setVerticalTextPosition(JLabel.BOTTOM);
 		scoreboard.setHorizontalTextPosition(JLabel.CENTER);
@@ -71,6 +72,13 @@ public class ScorePanel extends JPanel implements PlayerScoreObserver, PlayerMov
 		timerboard.setHorizontalTextPosition(JLabel.CENTER);
 		timerboard.setText("<html> <font color = 'WHITE' face = 'Impact' size='5'>Time " + timer.getTime() +"</font></html>");
 		this.add(timerboard);
+		
+		finishedBoard = new JLabel("Congratulations!", finishedBoardIcon, JLabel.CENTER);
+		finishedBoard.setVerticalTextPosition(JLabel.BOTTOM);
+		finishedBoard.setHorizontalTextPosition(JLabel.CENTER);
+		finishedBoard.setText("<html> <font color = 'WHITE' face = 'Impact' size='5'>Congratulations on finshing the maze!<br>To restart, click 'New Game' in the game menu.</font></html>");
+		finishedBoard.setVisible(false);
+		this.add(finishedBoard);
 	}
 	
 	
@@ -95,6 +103,10 @@ public class ScorePanel extends JPanel implements PlayerScoreObserver, PlayerMov
 			goldBoard.setText("<html> <font color = 'WHITE' face = 'Impact' size='5'>Gold " + player.getNumberOfGold() +"</font></html>");
 			trapBoard.setText("<html> <font color = 'WHITE' face = 'Impact' size='5'>Trap " + player.getNumberOfTrap()+"</font></html>");
 			stepBoard.setText("<html> <font color = 'WHITE' face = 'Impact' size='5'>Step " + player.getNumberOfStep() +"</font></html>");
+			if (player.isFinished()) {
+				timer.terminate();
+				finishedBoard.setVisible(true);
+			}
 		}
 	}
 
@@ -104,10 +116,13 @@ public class ScorePanel extends JPanel implements PlayerScoreObserver, PlayerMov
 		timerboard.setText("<html> <font color = 'WHITE' face = 'Impact' size='5'>Time " + timer.getTime() +"</font></html>");
 	}
 
-
 	@Override
 	public void TimeEnd() {
 		timerboard.setText("<html> <font color = 'WHITE' face = 'Impact' size='5'>Time End "+"</font></html>");
-		this.player.reSetScore();
+		//this.player.reSetScore();
+	}
+	
+	public void resetFinishedBoard() {
+		finishedBoard.setVisible(false);	
 	}
 }

@@ -30,7 +30,6 @@ public class Timer implements Runnable{
 	}
 	
 	public void setTimeLimit(int t) {
-		System.out.println("In timer, time limit is set to " + t);
 		timeLimit = t*60;
 	}
 	

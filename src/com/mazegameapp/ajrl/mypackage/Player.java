@@ -16,7 +16,7 @@ public class Player{
 	private BufferedImage image;
 	ArrayList<PlayerMovementObserver> playerMovementObservers = new ArrayList<>();
 	ArrayList<PlayerScoreObserver> playerScoreObservers = new ArrayList<>();
-
+	private boolean frozen;
 	private static final int INI_SCORE = 100;
 	//move a step will minus 1 from player's score.
 	private static final int MOVE_SCORE = -1;
@@ -89,6 +89,9 @@ public class Player{
 	}
 
 	public void moveSelf(String direction) {
+		if (this.frozen) {
+			return;
+		}
 		if ((direction.equals(ActionData.MoveDirection.UP.toString()) && !this.getCurrentCell().hasTopWall())
 			|| (direction.equals(ActionData.MoveDirection.DOWN.toString()) && !this.getCurrentCell().hasButtomWall())
 			|| (direction.equals(ActionData.MoveDirection.LEFT.toString()) && (!this.getCurrentCell().hasLeftWall() && this.getCurrentCell().getX() != 0))
@@ -131,6 +134,9 @@ public class Player{
 		} else {
 			done = false;
 			notifyAllPlayerMovementObervers(done);
+		}
+		if (isFinished()) {
+			freezePlayer();
 		}
 	}
 	
@@ -201,5 +207,18 @@ public class Player{
 	
 	public void setStepCost(int stepCost) {
 		this.stepCost = stepCost;
+	}
+	
+	public void freezePlayer() {
+		this.frozen = true;
+	}
+
+	public void unfreezePlayer() {
+		 this.frozen = false;
+	}
+
+	public boolean isFinished() {
+		 return ((cell.getX()/cell.getWidth() == gridMaze.getGridNum() -1) &&
+				 (cell.getY()/cell.getWidth() == gridMaze.getGridNum() -1));
 	}
 }

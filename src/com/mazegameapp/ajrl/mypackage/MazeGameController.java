@@ -38,10 +38,12 @@ public class MazeGameController implements ControllerInterface{
 		gridMaze.initializeGridMaze();
 	    player.setCurrentCell((gridMaze.getGrid())[0][0]);
 	    player.reSetScore();
+	    player.unfreezePlayer();
 	    stopTimer();
 		changeTheme(theme);
 		mazeGameView.getMazePanel().finishSetting();
 		mazeGameView.enableStartTimerMenuItem();
+		mazeGameView.cancelFinishedMessage();
 	}
 	
 	@Override
@@ -91,7 +93,6 @@ public class MazeGameController implements ControllerInterface{
 	public void startTimer(int timeLimit) {
 		// create a thread, let timer run.
 		timer.resetTimer();
-		System.out.println("In the controller, time limit is " + timeLimit);
 		timer.setTimeLimit(timeLimit);
 	    thread = new Thread(timer);
 		thread.start();
