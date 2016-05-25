@@ -17,4 +17,6 @@ public interface ControllerInterface {
 	 * background of the cell.  
 	 */
 	public void reStartGame(String difficultyLevel, String theme);
+	
+	public void startTimer(int timeLimit);
 }

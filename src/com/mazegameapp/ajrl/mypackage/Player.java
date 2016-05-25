@@ -20,6 +20,7 @@ public class Player{
 	private static final int INI_SCORE = 100;
 	//move a step will minus 1 from player's score.
 	private static final int MOVE_SCORE = -1;
+	private int stepCost = MOVE_SCORE;
 	private int score;
 	private int numberOfStep = 0;
 	private int numberOfGold = 0;
@@ -123,7 +124,7 @@ public class Player{
 			this.setCurrentCell(newcell);
 			done = true;
 			//since player moved a step, subtract score 1.
-			changeScore(MOVE_SCORE);
+			changeScore(stepCost);
 			numberOfStep++;
 			notifyAllPlayerMovementObervers(done);
 			done = false;
@@ -197,5 +198,8 @@ public class Player{
 	public void setNumberOfTrap(int numberOfTrap) {
 		this.numberOfTrap = numberOfTrap;
 	}
-
+	
+	public void setStepCost(int stepCost) {
+		this.stepCost = stepCost;
+	}
 }

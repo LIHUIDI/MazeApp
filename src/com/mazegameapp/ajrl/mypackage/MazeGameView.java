@@ -13,6 +13,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -36,25 +37,25 @@ public class MazeGameView implements ActionListener{
 	ControllerInterface controller;
 	private GridMaze gridMaze;
 	private Player player;
+	private Timer timer;
 	
 	private JFrame f;
 	private MyPanel myPanelView;
 	private ScorePanel scorePanel;
 	
 	private JMenuBar menuBar;
-	private JMenu menu, settingMenu, difficultySettingMenu, themeSettingMenu;
-	private JMenuItem startMenuItem;
-	private JMenuItem exitMenuItem;
+	private JMenu menu, settingMenu, difficultySettingMenu, themeSettingMenu, timerMenu;
+	private JMenuItem startMenuItem, exitMenuItem, startTimer, setTimer;
 	
 	private String difficultySelelcted = ActionData.Difficultylevel.BEGINNER.toString();
 	private String themeSelected = ActionData.Theme.WINTER.toString();
+	private String timeSelected = "2";
 	
-	
-	public MazeGameView (GridMaze gridMaze, Player player, ControllerInterface controller) {
+	public MazeGameView (GridMaze gridMaze, Player player, Timer timer, ControllerInterface controller) {
 		this.controller = controller;
     	this.gridMaze = gridMaze;
     	this.player = player;
-    	
+    	this.timer = timer;
 	}
 	
 	public MyPanel getMazePanel() {
@@ -86,7 +87,7 @@ public class MazeGameView implements ActionListener{
 	    fillerPanel.setPreferredSize(panelDimension);
 	    fillerPanel.setBackground(Color.BLUE);
 	    
-	    scorePanel = new ScorePanel(this.player);
+	    scorePanel = new ScorePanel(this.player, this.timer);
 	    scorePanel.setPreferredSize(new Dimension(400,60));
 	    scorePanel.setBackground(Color.RED);
 
@@ -194,8 +195,25 @@ public class MazeGameView implements ActionListener{
 	    settingMenu.setMnemonic(KeyEvent.VK_S);
 	    settingMenu.add(difficultySettingMenu);
 	    settingMenu.add(themeSettingMenu);
-		menuBar.add(settingMenu);
-		
+	    menuBar.add(settingMenu);
+	    
+	    timerMenu = new JMenu("Timer");
+	    startTimer = new JMenuItem("Start Timer");
+	    startTimer.addActionListener(this);
+	    startTimer.setActionCommand("startTimer");
+	    timerMenu.add(startTimer);
+	    
+		setTimer = new JMenu("Set Time");
+		String[] timeStrings = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"};
+		JComboBox timeList = new JComboBox(timeStrings);
+		timeList.setEditable(true);
+		timeList.setSelectedIndex(0);
+		//timeList.setActionCommand("settimer");
+		timeList.addActionListener(this);
+		setTimer.add(timeList);
+	    timerMenu.add(setTimer);
+	    
+	    menuBar.add(timerMenu);
 		f.setJMenuBar(menuBar);
 	}
 	
@@ -207,15 +225,31 @@ public class MazeGameView implements ActionListener{
 		startMenuItem.setEnabled(false);
 	}
 	
+	public void disableStartTimerMenuItem() {
+		startTimer.setEnabled(false);
+	}
+	
+	public void enableStartTimerMenuItem(){
+		startTimer.setEnabled(true);
+	}
+	
 	/**
 	 * Set the actions performed for menu items.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		System.out.println("once,once");
 		if (e.getActionCommand().equals("newgame")) {
 			controller.reStartGame(difficultySelelcted.toString(), themeSelected.toString());
 		} else if (e.getActionCommand().equals("exit")) {
 			System.exit(0);
+		} else if (e.getActionCommand().equals("startTimer")) {
+			System.out.println("when start the timer, the time is " + Integer.parseInt(timeSelected));
+			controller.startTimer(Integer.parseInt(timeSelected));
+		} else if (e.getSource() instanceof JComboBox) {
+			System.out.println("user has selected timer");
+			timeSelected = (String)((JComboBox)e.getSource()).getSelectedItem();
+			System.out.println("selected timer is " + timeSelected);
 		} else if (e.getActionCommand().equals(ActionData.Difficultylevel.BEGINNER.toString())) {
 			difficultySelelcted = ActionData.Difficultylevel.BEGINNER.toString();
 		} else if (e.getActionCommand().equals(ActionData.Difficultylevel.INTERMEDIATE.toString())) {

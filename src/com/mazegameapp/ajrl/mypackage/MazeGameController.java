@@ -10,16 +10,19 @@ import javax.swing.SwingUtilities;
 public class MazeGameController implements ControllerInterface{
 	GridMaze gridMaze;
 	Player player;
+	Timer timer;
+	Thread thread;
 	MazeGameView mazeGameView;
 	
 	public MazeGameController(GridMaze gridMaze) {
 		this.gridMaze = gridMaze;
 		this.gridMaze.initializeGridMaze();
-		
 		this.player = new Player(gridMaze);
         player.setCurrentCell((gridMaze.getGrid())[0][0]);
         
-		mazeGameView = new MazeGameView(gridMaze, player, this);
+        this.timer = new Timer(120);
+		mazeGameView = new MazeGameView(gridMaze, player, timer,this);
+		
 		SwingUtilities.invokeLater(new Runnable() {
 	        public void run() {
 	        	mazeGameView.createAndShowGUI(); 
@@ -35,8 +38,10 @@ public class MazeGameController implements ControllerInterface{
 		gridMaze.initializeGridMaze();
 	    player.setCurrentCell((gridMaze.getGrid())[0][0]);
 	    player.reSetScore();
+	    stopTimer();
 		changeTheme(theme);
 		mazeGameView.getMazePanel().finishSetting();
+		mazeGameView.enableStartTimerMenuItem();
 	}
 	
 	@Override
@@ -80,5 +85,28 @@ public class MazeGameController implements ControllerInterface{
 			}
 		}
 		player.changePlayerImgPath(theme);
+	}
+
+	@Override
+	public void startTimer(int timeLimit) {
+		// create a thread, let timer run.
+		timer.resetTimer();
+		System.out.println("In the controller, time limit is " + timeLimit);
+		timer.setTimeLimit(timeLimit);
+	    thread = new Thread(timer);
+		thread.start();
+		mazeGameView.disableStartTimerMenuItem();
+	}
+	
+	private void stopTimer() {
+		if (thread != null) {
+			timer.terminate();
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

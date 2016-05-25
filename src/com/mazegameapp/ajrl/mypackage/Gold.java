@@ -70,7 +70,7 @@ public class Gold implements Item{
 	@Override
 	public void drawItem(Graphics g, SquareCell squareCell) {
 		loadImage();
-		g.drawImage(image, squareCell.getX()+2, squareCell.getY()+2, squareCell.getWidth()-4, squareCell.getWidth()-4, null, null);
+		g.drawImage(image, squareCell.getX()+6, squareCell.getY()+6, squareCell.getWidth()-10, squareCell.getWidth()-10, null, null);
 	}
 
 	@Override
