@@ -23,8 +23,6 @@ public class GridMaze {
 	private int ratioOfGoldCell = DEFAULT_RATIO_GOLD_CELL;
 	private int ratioOfTrapCell = DEFAULT_RATIO_TRAP_CELL;
 	
-	ArrayList<GridMazeObserver> gridMazeObservers = new ArrayList<>();
-			
 	// a predetermined arrangement of cells, a rectangular grid.
 	SquareCell[][] grid = new SquareCell[gridNum][gridNum];
 	
@@ -49,14 +47,6 @@ public class GridMaze {
 	
 	public SquareCell[][] getGrid() {
 		return grid;
-	}
-	
-	public void registerGridMazeObserver(GridMazeObserver o) {
-		gridMazeObservers.add(o);
-	}
-	
-	public void removeGridMazeObserver(GridMazeObserver o) {
-		gridMazeObservers.remove(o);
 	}
 
 	/**
