@@ -7,14 +7,37 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
-
+/**
+ * 
+ * Gold is a Item and has positive value.
+ *
+ */
 public class Gold implements Item{
+	
+	// the default value of gold.
 	private static final int INI_VALUE = 10;
 	private int value = INI_VALUE;
 	
 	private BufferedImage image;
 	private HashMap<String, String> goldImgs = new HashMap <>();
-	private String goldImgPath = "resources/image/wintercoin.png"; //default cell background image.
+	//default cell background image.
+	private String goldImgPath = "resources/image/wintercoin.png"; 
+	
+	/**
+	 * Constructor of Gold, using the default value and image of gold.
+	 */
+	public Gold() {
+		defineGoldImage();
+	}
+	
+	/**
+	 * Constructor of Gold, using the value passed in and image of gold.
+	 * @param value the value that this gold will be set to.
+	 */
+	public Gold(int value) {
+		this.value = value;
+		defineGoldImage();
+	}
 	
 	public String getGoldImgPath() {
 		return goldImgPath;
@@ -22,15 +45,6 @@ public class Gold implements Item{
 
 	public void setGoldImgPath(String goldImgPath) {
 		this.goldImgPath = goldImgPath;
-	}
-	
-	public Gold() {
-		defineGoldImage();
-	}
-	
-	public Gold(int value) {
-		this.value = value;
-		defineGoldImage();
 	}
 	
 	private void defineGoldImage() {
@@ -56,7 +70,7 @@ public class Gold implements Item{
 	@Override
 	public void drawItem(Graphics g, SquareCell squareCell) {
 		loadImage();
-		g.drawImage(image, squareCell.getX()+2, squareCell.getY()+2, squareCell.getWidth()-4, squareCell.getWidth()-4, null, null);
+		g.drawImage(image, squareCell.getX()+6, squareCell.getY()+6, squareCell.getWidth()-10, squareCell.getWidth()-10, null, null);
 	}
 
 	@Override

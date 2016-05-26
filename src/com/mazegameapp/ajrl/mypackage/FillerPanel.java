@@ -2,7 +2,6 @@ package com.mazegameapp.ajrl.mypackage;
 
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -11,7 +10,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,8 +24,8 @@ public class FillerPanel extends JPanel implements PlayerMovementObserver{
 	private boolean showHint = false;
 	private MyPanel myPanelView;
 	
-	public FillerPanel(Player player, MyPanel myPanelView) {
-		super(new FlowLayout(1,10,400));//layout decides what position the lable
+	public FillerPanel(Player player, final MyPanel myPanelView) {
+		super(new FlowLayout(FlowLayout.CENTER,10,10));
 		this.myPanelView = myPanelView;
 
 		try {                
@@ -38,10 +36,12 @@ public class FillerPanel extends JPanel implements PlayerMovementObserver{
 		
 		this.player = player;
 		this.player.registerplayerMovementObservers(this);
-	
+		ImageIcon hintIcon = new ImageIcon("resources/image/hintImage.jpg", "hint");
+		hintBoard = new JLabel("",hintIcon,JLabel.CENTER);
+		this.add(hintBoard);
 		JCheckBox hintSwitch = new JCheckBox("<html> <font color = 'WHITE' face = 'Impact' size='5'>Show hint</font></html>",null,false);
 		this.add(hintSwitch);
-		 ActionListener actionListener = new ActionListener() {
+		ActionListener actionListener = new ActionListener() {
 		      public void actionPerformed(ActionEvent actionEvent) {
 		    	 if (showHint == false){
 		    		 showHint = true;
@@ -53,21 +53,6 @@ public class FillerPanel extends JPanel implements PlayerMovementObserver{
 		      }
 		    };
 		hintSwitch.addActionListener(actionListener);
-		Image img;
-		
-		try {//resize the image, it would be nice if dimensions are in scale
-			img = ImageIO.read(new File("resources/image/hintImage.jpg"));
-			Image newimg = img.getScaledInstance(150, 150,  java.awt.Image.SCALE_SMOOTH);
-			ImageIcon hintIcon = new ImageIcon(newimg);
-			
-		hintBoard = new JLabel("",hintIcon,JLabel.CENTER);
-		this.add(hintBoard);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
 	}
 	
 	@Override
@@ -80,12 +65,11 @@ public class FillerPanel extends JPanel implements PlayerMovementObserver{
 	@Override
 	public void finishMovement(boolean done) {
 		if (done) {
-			String path = null;
+			String path = "resources/image/hintImage.jpg";
 			if(showHint){
 				char h = player.getCurrentCell().getHint();
 				if(h == 'r'){
 					path = "resources/image/hintImageR.jpg";
-	
 				}else if(h == 'l'){
 					path = "resources/image/hintImageL.jpg";
 				}else if(h == 't'){
@@ -94,20 +78,10 @@ public class FillerPanel extends JPanel implements PlayerMovementObserver{
 					path = "resources/image/hintImageD.jpg";
 				}
 			}
-			else{
-				path = "resources/image/hintImage.jpg";
-			}
-			Image img;
-			try {
-				img = ImageIO.read(new File(path));
 			
-			Image newimg = img.getScaledInstance(150, 150,  java.awt.Image.SCALE_SMOOTH);
-			ImageIcon hintIcon = new ImageIcon(newimg);
+			ImageIcon hintIcon = new ImageIcon(path);
 			hintBoard.setIcon(hintIcon);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 		}
 	}
 }

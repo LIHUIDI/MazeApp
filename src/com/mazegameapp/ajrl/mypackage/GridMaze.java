@@ -8,24 +8,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Random;
-
-public class GridMaze{//generate 那里需要加一下ratio 和 条件去造teleport cell。
+/**
+ * The concrete grid maze that holds square cells. It has same height and width, thus is a square grid.
+ */
+public class GridMaze {
 	private static final long serialVersionUID = 1L;
 	private static final int DEFAULT_GRID_SIZE = 10;
 	private int gridNum = DEFAULT_GRID_SIZE;
 	
 	private static final int DEFAULT_RATIO_COMMON_CELL = 60;
-	private static final int DEFAULT_RATIO_GOLD_CELL = 26;
+	private static final int DEFAULT_RATIO_GOLD_CELL = 25;
 	private static final int DEFAULT_RATIO_TRAP_CELL = 10;
-	private static final int DEFAULT_RATIO_Teleport_CELL = 4;
-
+	private static final int DEFAULT_RATIO_RIFT_CELL = 5;
 	private int ratioOfCommonCell = DEFAULT_RATIO_COMMON_CELL;
 	private int ratioOfGoldCell = DEFAULT_RATIO_GOLD_CELL;
 	private int ratioOfTrapCell = DEFAULT_RATIO_TRAP_CELL;
-	private int ratioOfTeleportCell = DEFAULT_RATIO_TRAP_CELL;
-	ArrayList<GridMazeObserver> gridMazeObservers = new ArrayList<>();
-			
-	// a predetermined arrangement of cells, a rectangular grid, default size is 10*10.
+	private int ratioOfRiftCell = DEFAULT_RATIO_RIFT_CELL;
+	
+	// a predetermined arrangement of cells, a rectangular grid.
 	SquareCell[][] grid = new SquareCell[gridNum][gridNum];
 	
 	/**
@@ -41,26 +41,20 @@ public class GridMaze{//generate 那里需要加一下ratio 和 条件去造tele
 		return gridNum;
 	}
 	
-	public void setCellRatio(int ratioOfCommonCell,int ratioOfGoldCell,int ratioOfTrapCell) {
+	public void setCellRatio(int ratioOfCommonCell,int ratioOfGoldCell,int ratioOfTrapCell,int ratioOfRiftCell) {
 		this.ratioOfCommonCell = ratioOfCommonCell;
 		this.ratioOfGoldCell = ratioOfGoldCell;
 		this.ratioOfTrapCell = ratioOfTrapCell;
+		this.ratioOfRiftCell = ratioOfRiftCell;
+
 	}
 	
 	public SquareCell[][] getGrid() {
 		return grid;
 	}
-	
-	public void registerGridMazeObserver(GridMazeObserver o) {
-		gridMazeObservers.add(o);
-	}
-	
-	public void removeGridMazeObserver(GridMazeObserver o) {
-		gridMazeObservers.remove(o);
-	}
 
 	/**
-	 * 
+	 * Put concrete cells into grid maze, and remove walls of cells to actually generates the maze.
 	 */
 	public void initializeGridMaze() {
 		// Firstly, initialize a grid
@@ -74,9 +68,14 @@ public class GridMaze{//generate 那里需要加一下ratio 和 条件去造tele
 				} else if (randomInt <= (ratioOfCommonCell +  ratioOfGoldCell) && randomInt > ratioOfCommonCell){
 					Gold gold = new Gold();
 					grid[i][j] = new SquareCellWithItem(i, j, 1, gold);
-				} else {
+				} else if(randomInt > (100 - (ratioOfCommonCell +  ratioOfGoldCell)) && randomInt < (100 - ratioOfRiftCell)){
 					Skull skull = new Skull();
 					grid[i][j] = new SquareCellWithItem(i, j, 1, skull);
+				} else {
+					int randomInt1 = randomGenerator.nextInt(gridNum-1);
+					int randomInt2 = randomGenerator.nextInt(gridNum-1);
+					ChronoRift rift = new ChronoRift(randomInt1,randomInt2);
+					grid[i][j] = new SquareCellWithItem(i, j, 1, rift);
 				}
 			}
 		}
@@ -143,7 +142,7 @@ public class GridMaze{//generate 那里需要加一下ratio 和 条件去造tele
 	}
 	
 	/**
-	 * corrects the hints in Square cells.
+	 * Corrects the hints in Square cells.
 	 * All cells along the shortest path from starting cell to ending cell are incorrect.
 	 * Each holds the reversed hint of the previous cell.
 	 */

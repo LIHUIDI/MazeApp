@@ -20,6 +20,7 @@ public class Player{
 	private static final int INI_SCORE = 100;
 	//move a step will minus 1 from player's score.
 	private static final int MOVE_SCORE = -1;
+	private int stepCost = MOVE_SCORE;
 	private int score;
 	private int numberOfStep = 0;
 	private int numberOfGold = 0;
@@ -88,10 +89,10 @@ public class Player{
 	}
 
 	public void moveSelf(String direction) {
-		if ((direction.equals("up") && !this.getCurrentCell().hasTopWall())
-			|| (direction.equals("down") && !this.getCurrentCell().hasButtomWall())
-			|| (direction.equals("left") && (!this.getCurrentCell().hasLeftWall() && this.getCurrentCell().getX() != 0))
-			|| (direction.equals("right") && (!this.getCurrentCell().hasRightWall() && this.getCurrentCell().getX()/this.getCurrentCell().getWidth() != gridMaze.getGrid().length - 1))) {
+		if ((direction.equals(ActionData.MoveDirection.UP.toString()) && !this.getCurrentCell().hasTopWall())
+			|| (direction.equals(ActionData.MoveDirection.DOWN.toString()) && !this.getCurrentCell().hasButtomWall())
+			|| (direction.equals(ActionData.MoveDirection.LEFT.toString()) && (!this.getCurrentCell().hasLeftWall() && this.getCurrentCell().getX() != 0))
+			|| (direction.equals(ActionData.MoveDirection.RIGHT.toString()) && (!this.getCurrentCell().hasRightWall() && this.getCurrentCell().getX()/this.getCurrentCell().getWidth() != gridMaze.getGrid().length - 1))) {
 			//set previous cell to current cell
 			this.previousCell = this.getCurrentCell();
 			//collect item if old cell has item
@@ -109,34 +110,46 @@ public class Player{
 			}
 			//update current cell to next cell according to move direction.
 			SquareCell newcell = null;
-			if (direction.equals("up")) {
+			if (direction.equals(ActionData.MoveDirection.UP.toString())) {
 				newcell = gridMaze.getGrid()[previousCell.getX()/previousCell.getWidth()][(previousCell.getY()- previousCell.getWidth())/previousCell.getWidth()];
-			} else if (direction.equals("down")) {
+			} else if (direction.equals(ActionData.MoveDirection.DOWN.toString())) {
 				newcell = gridMaze.getGrid()[(previousCell.getX())/previousCell.getWidth()][(previousCell.getY() + previousCell.getWidth())/previousCell.getWidth()];
-			} else if (direction.equals("left")) {
+			} else if (direction.equals(ActionData.MoveDirection.LEFT.toString())) {
 				newcell = gridMaze.getGrid()[(previousCell.getX()- previousCell.getWidth())/previousCell.getWidth()][previousCell.getY()/previousCell.getWidth()];
-			} else if (direction.equals("right")) {
+			} else if (direction.equals(ActionData.MoveDirection.RIGHT.toString())) {
 				newcell = gridMaze.getGrid()[(previousCell.getX() + previousCell.getWidth())/previousCell.getWidth()][previousCell.getY()/previousCell.getWidth()];
 			} else {
-				//shouldn't reach here.
-			}
-			
-			if(newcell instanceof SquareCellWithItem ){
-				Item i = ((SquareCellWithItem) newcell).getItem() ;
-				if(i instanceof Teleport){
-					newcell = ((Teleport) i).getToCell();
-				}
+				//shouldn't reach here
 			}
 			this.setCurrentCell(newcell);
-			
-				
-			
 			done = true;
 			//since player moved a step, subtract score 1.
-			changeScore(MOVE_SCORE);
+			changeScore(stepCost);
 			numberOfStep++;
 			notifyAllPlayerMovementObervers(done);
 			done = false;
+			
+			//steps on chronorift, get teleported to new cell. while loop handles transfers from rift to rift
+			while(this.cell instanceof SquareCellWithItem && ((SquareCellWithItem)(this.cell)).getItem() instanceof ChronoRift && !((ChronoRift)((SquareCellWithItem)(this.cell)).getItem()).getUsed()){
+				this.previousCell = this.getCurrentCell();
+
+				notifyAllPlayerMovementObervers(false);
+
+				this.previousCell = this.getCurrentCell();
+
+				ChronoRift rift=((ChronoRift)((SquareCellWithItem)(this.cell)).getItem());
+				newcell = this.gridMaze.getGrid()[rift.getToPosX()][rift.getToPosY()];
+				newcell.setX(rift.getToPosX()*cell.getWidth());
+				newcell.setY(rift.getToPosY()*cell.getWidth());
+				
+				
+				this.setCurrentCell(newcell);
+				
+				rift.setUsed(true);
+				done = true;
+				notifyAllPlayerMovementObervers(done);
+				done = false;
+			}
 		} else {
 			done = false;
 			notifyAllPlayerMovementObervers(done);
@@ -207,5 +220,8 @@ public class Player{
 	public void setNumberOfTrap(int numberOfTrap) {
 		this.numberOfTrap = numberOfTrap;
 	}
-
+	
+	public void setStepCost(int stepCost) {
+		this.stepCost = stepCost;
+	}
 }
