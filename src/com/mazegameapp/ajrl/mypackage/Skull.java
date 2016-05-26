@@ -7,12 +7,16 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
-
+/**
+ * One kinds of {@code Item} which has negative value.
+ *
+ */
 public class Skull implements Item{
 	private static final int INI_VALUE = -10;
 	private int value = INI_VALUE;
 	
 	private BufferedImage image;
+	//The map that defines four theme images for this skull.
 	private HashMap<String, String> skullImgs = new HashMap <>();
 	private String skullImgPath = "resources/image/winterskull.png"; //default cell background image.
 	
@@ -26,10 +30,10 @@ public class Skull implements Item{
 	}
 	
 	private void defineSkullImage() {
-		skullImgs.put("spring", "resources/image/springskull.png");
-		skullImgs.put("summer", "resources/image/summerskull.png");
-		skullImgs.put("autumn", "resources/image/autumnskull.png");
-		skullImgs.put("winter", "resources/image/winterskull.png");
+		skullImgs.put(ActionData.Theme.SPRING.toString(), "resources/image/springskull.png");
+		skullImgs.put(ActionData.Theme.SUMMER.toString(), "resources/image/summerskull.png");
+		skullImgs.put(ActionData.Theme.AUTUMN.toString(), "resources/image/autumnskull.png");
+		skullImgs.put(ActionData.Theme.WINTER.toString(), "resources/image/winterskull.png");
     }
 	
 	private void loadImage() {

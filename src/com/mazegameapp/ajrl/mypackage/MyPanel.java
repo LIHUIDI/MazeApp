@@ -11,6 +11,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+/**
+ * The Panel where maze would be drawn on. It listens any key stroke that would communicates with {@code ControllerInterface} that
+ * such user action has happened. When player finished a movement, it will redraw the cell and player that reflects these change. 
+ *
+ */
 public class MyPanel extends JPanel implements KeyListener, PlayerMovementObserver{
 	/**
 	 * 
@@ -49,8 +54,10 @@ public class MyPanel extends JPanel implements KeyListener, PlayerMovementObserv
     public void setCanDrawMaze(boolean a) {
     	canDrawMaze = a;
     }
-    
-    public void paint(Graphics g) {
+    /**
+     * paint the maze, player.
+     */
+    public void paintComponent(Graphics g) {
     	super.paintComponent(g);
     	g.drawImage(myPanelimage, 0, 0, 1000,1000,null,null);
     	
@@ -108,7 +115,9 @@ public class MyPanel extends JPanel implements KeyListener, PlayerMovementObserv
 			}
 		}
 	}
-
+	/**
+	 * Redraw the panel to reflect player has finished certain movement.
+	 */
 	@Override
 	public void finishMovement(boolean done) {
 		if (done) {
@@ -127,7 +136,9 @@ public class MyPanel extends JPanel implements KeyListener, PlayerMovementObserv
 		    repaint(squareX,squareY,squareW,squareH);
 		}
 	}
-	
+	/**
+	 * Set the panel state to "can draw", and repaint the panel.
+	 */
 	public void finishSetting() {
 		setCanDrawMaze(true);
         repaint(0,0,this.getSize().width,this.getSize().width);

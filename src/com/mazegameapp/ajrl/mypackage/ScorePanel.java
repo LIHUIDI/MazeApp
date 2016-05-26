@@ -10,7 +10,12 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+/**
+ * The panel that show all the records that player has obtained at some point of the game. 
+ * These records include total scores, number of gold collected, number of traps encountered, number of steps, time cost 
+ * and game finish notification.
+ *
+ */
 public class ScorePanel extends JPanel implements PlayerScoreObserver, PlayerMovementObserver, TimerObserver{
 	
 	private static final long serialVersionUID = 1L;
@@ -88,6 +93,9 @@ public class ScorePanel extends JPanel implements PlayerScoreObserver, PlayerMov
 	    g.drawImage(scorePanelimage, 0, 0, this.getWidth(),this.getHeight(),null,null);
 	}
 	
+	/**
+	 * Update all records to new records.
+	 */
 	@Override
 	public void updateScore() {
 		scoreboard.setText("<html> <font color = 'WHITE' face = 'Impact' size='5'>Score " + player.getScore() +"</font></html>");
@@ -96,6 +104,9 @@ public class ScorePanel extends JPanel implements PlayerScoreObserver, PlayerMov
 		stepBoard.setText("<html> <font color = 'WHITE' face = 'Impact' size='5'>Step " + player.getNumberOfStep() +"</font></html>");
 	}
 	
+	/**
+	 * Change the records when player finished a move.
+	 */
 	@Override
 	public void finishMovement(boolean done) {
 		if (done) {
@@ -110,18 +121,23 @@ public class ScorePanel extends JPanel implements PlayerScoreObserver, PlayerMov
 		}
 	}
 
-
+	/**
+	 * indicates time has passed so far.
+	 */
 	@Override
 	public void updateTime() {
 		timerboard.setText("<html> <font color = 'WHITE' face = 'Impact' size='5'>Time " + timer.getTime() +"</font></html>");
 	}
-
+	/**
+	 * indicates Time has been used out.
+	 */
 	@Override
 	public void TimeEnd() {
 		timerboard.setText("<html> <font color = 'WHITE' face = 'Impact' size='5'>Time End "+"</font></html>");
-		//this.player.reSetScore();
 	}
-	
+	/**
+	 * Make the game finish notification invisible.
+	 */
 	public void resetFinishedBoard() {
 		finishedBoard.setVisible(false);	
 	}

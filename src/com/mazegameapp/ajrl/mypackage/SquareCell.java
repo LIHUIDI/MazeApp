@@ -8,13 +8,17 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-
+/**
+ * SquareCell represents the unit of {@code GridMaze}.The components of SquareCell are coordinates, width,
+ * walls and predefined background image and wall images.
+ *
+ */
 public class SquareCell{
 	
 	private int xPos;
     private int yPos;
     private int width;
-    private char hint; // the direction towards ending point in r l d t 
+    private char hint; // the direction towards ending point in {r l d t}
     
     private int thicknessOfWall = 5;
     private boolean hasTopWall = true;
@@ -150,7 +154,10 @@ public class SquareCell{
     public int getWidth(){
         return width;
     } 
-    
+    /**
+     * 
+     * @return true if this cell has top wall.
+     */
     public boolean hasTopWall() {
 		return hasTopWall;
 	}
@@ -166,7 +173,10 @@ public class SquareCell{
 	public boolean hasRightWall() {
 		return hasRightWall;
 	}
-
+	
+	/**
+	 * If two SquareCells has same coordinates and width, then they are equal.
+	 */
 	@Override
 	public boolean equals(Object other) {
 		if (other == this) return true;
@@ -236,11 +246,18 @@ public class SquareCell{
 		if(this.hasBottomWall) g.drawImage(bottomWallimage, xPos, yPos+width-thicknessOfWall, width, thicknessOfWall,null,null);
 		if(this.hasTopWall) g.drawImage(topWallimage,xPos, yPos, width, thicknessOfWall,null,null);
 	}
-
+	
+	/**
+	 * Change the theme of background of this cell.
+	 * @param themeName the theme of background that background of this cell should be set to.
+	 */
 	public void changeSquareCellBackGroundImgPath(String themeName) {
 		setSquareCellBackGroundImgPath(squareCellBackGroundImgs.get(themeName));
 	}
-	
+	/**
+	 * Change the theme of walls of this cell.
+	 * @param themeName the theme of background that walls of this cell should be set to.
+	 */
 	public void changeWallImgs(String themeName) {
 		setTopWallImag(wallImgs.get(themeName).get("up"));
 		setBottomWallImag(wallImgs.get(themeName).get("down"));

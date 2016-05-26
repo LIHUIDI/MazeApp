@@ -72,9 +72,6 @@ public class MazeGameView implements ActionListener{
 	    f.setResizable(false);
 	    f.setVisible(true);
 	    
-	    f.setSize(1500,1000);
-	    f.setVisible(true);
-	    
 	    JPanel mainpane = (JPanel) f.getContentPane();
 	    mainpane.setLayout(new BoxLayout(mainpane, BoxLayout.X_AXIS));
 	    

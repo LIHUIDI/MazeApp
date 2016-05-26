@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
-
+/**
+ * Player encapsulates the state and behavior of the agent of Maze game. The main components are the grid maze and cell it is sitting in. 
+ * Several Observers that monitor it's movement and score state. 
+ *
+ */
 public class Player{
 	GridMaze gridMaze;
 	SquareCell previousCell;
@@ -31,6 +35,10 @@ public class Player{
 	private HashMap<String, String> playerImgs = new HashMap <>();
 	private String playerImgPath = "resources/image/winterplayer.png"; //default cell background image.
 	
+	/**
+	 * Constructor of Player.
+	 * @param gridMaze the GridMaze this player is in.
+	 */
 	public Player(GridMaze gridMaze) {
 		this.gridMaze = gridMaze;
 		this.score = INI_SCORE;
@@ -88,6 +96,10 @@ public class Player{
 		}
 	}
 
+	/**
+	 * Move the player to next cell based on the direction supplied.
+	 * @param direction indicates which direction this player would move to.
+	 */
 	public void moveSelf(String direction) {
 		if (this.frozen) {
 			return;
@@ -147,7 +159,10 @@ public class Player{
 	public SquareCell getCurrentCell() {
 		return cell;
 	}
-	
+	/**
+	 * 
+	 * @return the cell this player was in before any movement.
+	 */
 	public SquareCell getPreviousCell() {
 		return previousCell;
 	}
@@ -169,6 +184,10 @@ public class Player{
 		this.score += i;
 	}
 	
+	/**
+	 * Reset the all scores of this player to initial state, including number of steps, 
+	 * number of Gold collected, number of Traps encountered, total scores of this player.
+	 */
 	public void reSetScore() {
 		score = INI_SCORE;
 		numberOfStep = 0;
@@ -209,6 +228,9 @@ public class Player{
 		this.stepCost = stepCost;
 	}
 	
+	/**
+	 * Set player's state to frozen such that this player can not be moved.
+	 */
 	public void freezePlayer() {
 		this.frozen = true;
 	}
@@ -216,7 +238,11 @@ public class Player{
 	public void unfreezePlayer() {
 		 this.frozen = false;
 	}
-
+	
+	/**
+	 * Test if player is in the exit cell.
+	 * @return true if player is in the exit cell, otherwise false.
+	 */
 	public boolean isFinished() {
 		 return ((cell.getX()/cell.getWidth() == gridMaze.getGridNum() -1) &&
 				 (cell.getY()/cell.getWidth() == gridMaze.getGridNum() -1));
