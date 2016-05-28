@@ -17,11 +17,13 @@ public class GridMaze {
 	private int gridNum = DEFAULT_GRID_SIZE;
 	
 	private static final int DEFAULT_RATIO_COMMON_CELL = 60;
-	private static final int DEFAULT_RATIO_GOLD_CELL = 30;
+	private static final int DEFAULT_RATIO_GOLD_CELL = 25;
 	private static final int DEFAULT_RATIO_TRAP_CELL = 10;
+	private static final int DEFAULT_RATIO_RIFT_CELL = 5;
 	private int ratioOfCommonCell = DEFAULT_RATIO_COMMON_CELL;
 	private int ratioOfGoldCell = DEFAULT_RATIO_GOLD_CELL;
 	private int ratioOfTrapCell = DEFAULT_RATIO_TRAP_CELL;
+	private int ratioOfRiftCell = DEFAULT_RATIO_RIFT_CELL;
 	
 	// a predetermined arrangement of cells, a rectangular grid.
 	SquareCell[][] grid = new SquareCell[gridNum][gridNum];
@@ -39,10 +41,11 @@ public class GridMaze {
 		return gridNum;
 	}
 	
-	public void setCellRatio(int ratioOfCommonCell,int ratioOfGoldCell,int ratioOfTrapCell) {
+	public void setCellRatio(int ratioOfCommonCell,int ratioOfGoldCell,int ratioOfTrapCell, int ratioOfRiftCell) {
 		this.ratioOfCommonCell = ratioOfCommonCell;
 		this.ratioOfGoldCell = ratioOfGoldCell;
 		this.ratioOfTrapCell = ratioOfTrapCell;
+		this.ratioOfRiftCell = ratioOfRiftCell;
 	}
 	
 	public SquareCell[][] getGrid() {
@@ -64,9 +67,15 @@ public class GridMaze {
 				} else if (randomInt <= (ratioOfCommonCell +  ratioOfGoldCell) && randomInt > ratioOfCommonCell){
 					Gold gold = new Gold();
 					grid[i][j] = new SquareCellWithItem(i, j, 1, gold);
-				} else {
+				} else if(randomInt > (ratioOfCommonCell +  ratioOfGoldCell) && randomInt <= (100 - ratioOfRiftCell)){
 					Skull skull = new Skull();
 					grid[i][j] = new SquareCellWithItem(i, j, 1, skull);
+				} else {
+					int randomInt1 = randomGenerator.nextInt(gridNum-1);
+					int randomInt2 = randomGenerator.nextInt(gridNum-1);
+					grid[i][j] = new TeleportCell(i,j,1);
+					((TeleportCell)grid[i][j]).setToPosX(randomInt1);
+					((TeleportCell)grid[i][j]).setToPosX(randomInt2);
 				}
 			}
 		}

@@ -29,12 +29,12 @@ public class SquareCell{
     private HashMap<String, String> squareCellBackGroundImgs = new HashMap <>();
     private HashMap<String, HashMap<String, String>> wallImgs = new HashMap <>();
     
-    private String squareCellBackGroundImgPath = "resources/image/wintercell.png"; //default cell background image.
+    private String squareCellBackGroundImgPath = "resources/image/springcell.png"; //default cell background image.
     
-    private String topWallImag = "resources/image/winterupwall.png";
-	private String bottomWallImag = "resources/image/winterdownwall.png";
-    private String leftWallImag = "resources/image/winterleftwall.png";
-    private String rightWallImag = "resources/image/winterrightwall.png";
+    private String topWallImag = "resources/image/springupwall.png";
+	private String bottomWallImag = "resources/image/springdownwall.png";
+    private String leftWallImag = "resources/image/springleftwall.png";
+    private String rightWallImag = "resources/image/springrightwall.png";
     
     public SquareCell() {
     	defineSquareCellBackGroudImage();
@@ -227,7 +227,7 @@ public class SquareCell{
 		hasTopWall = false;
 	}
 	
-	private void drawWalls(Graphics g){
+	public void drawWalls(Graphics g){
 		BufferedImage topWallimage = null;
 		BufferedImage bottomWallimage = null;
 		BufferedImage leftWallimage = null;

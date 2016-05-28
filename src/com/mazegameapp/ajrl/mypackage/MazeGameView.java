@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
@@ -48,7 +49,7 @@ public class MazeGameView implements ActionListener{
 	private JMenuItem startMenuItem, exitMenuItem, startTimer, setTimer;
 	
 	private String difficultySelelcted = ActionData.Difficultylevel.BEGINNER.toString();
-	private String themeSelected = ActionData.Theme.WINTER.toString();
+	private String themeSelected = ActionData.Theme.SPRING.toString();
 	private String timeSelected = "2";
 	
 	public MazeGameView (GridMaze gridMaze, Player player, Timer timer, ControllerInterface controller) {
@@ -158,6 +159,7 @@ public class MazeGameView implements ActionListener{
 	    JRadioButton springButton = new JRadioButton("Spring(P)");
 	    springButton.setMnemonic(KeyEvent.VK_P);
 	    springButton.setActionCommand(ActionData.Theme.SPRING.toString());
+	    springButton.setSelected(true);
 	    
 	    JRadioButton summerButton = new JRadioButton("summer(U)");
 	    summerButton.setMnemonic(KeyEvent.VK_U);
@@ -170,7 +172,7 @@ public class MazeGameView implements ActionListener{
 	    JRadioButton winterButton = new JRadioButton("winter(W)",true);
 	    winterButton.setMnemonic(KeyEvent.VK_W);
 	    winterButton.setActionCommand(ActionData.Theme.WINTER.toString());
-	    winterButton.setSelected(true);
+	    
 	    
 	    springButton.addActionListener(this);
 	    summerButton.addActionListener(this);

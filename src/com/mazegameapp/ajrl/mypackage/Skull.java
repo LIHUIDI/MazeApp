@@ -18,7 +18,7 @@ public class Skull implements Item{
 	private BufferedImage image;
 	//The map that defines four theme images for this skull.
 	private HashMap<String, String> skullImgs = new HashMap <>();
-	private String skullImgPath = "resources/image/winterskull.png"; //default cell background image.
+	private String skullImgPath = "resources/image/springskull.png"; //default cell background image.
 	
 	public Skull() {
 		defineSkullImage();

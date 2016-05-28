@@ -58,18 +58,17 @@ public class MazeGameController implements ControllerInterface{
 	private void changeDifficulty(String level) {
 		if (level.equals(ActionData.Difficultylevel.BEGINNER.toString())) {
 			gridMaze.setGridNum(10);
-			//set the proportion of common cell, gold cell and trap cell to default 60%, 30%, 10%
-			gridMaze.setCellRatio(60,30,10);
+			gridMaze.setCellRatio(60,25,10,5);
 		} else if (level.equals(ActionData.Difficultylevel.INTERMEDIATE.toString())) {
 			// set the grid size to 30 * 30
 			gridMaze.setGridNum(20);
 			//set the proportion of common cell, gold cell and trap cell to 70%, 20%, 10%
-			gridMaze.setCellRatio(70,20,10);
+			gridMaze.setCellRatio(60,15,15,10);
 		} else if (level.equals(ActionData.Difficultylevel.ADVANCED.toString())){
 			// set the grid size to 50 * 50
 			gridMaze.setGridNum(40);
 			//set the proportion of common cell, gold cell and trap cell to 80%, 5%, 15%
-			gridMaze.setCellRatio(80,5,15);
+			gridMaze.setCellRatio(50,10,25,15);
 		} else {
 			// do nothing
 		}

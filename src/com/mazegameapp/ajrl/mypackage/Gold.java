@@ -21,7 +21,7 @@ public class Gold implements Item{
 	private BufferedImage image;
 	private HashMap<String, String> goldImgs = new HashMap <>();
 	//default cell background image.
-	private String goldImgPath = "resources/image/wintercoin.png"; 
+	private String goldImgPath = "resources/image/springcoin.png"; 
 	
 	/**
 	 * Constructor of Gold, using the default value and image of gold.

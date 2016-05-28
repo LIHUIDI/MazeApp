@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 /**
@@ -33,7 +34,7 @@ public class Player{
 	//indicate some movement done or cann't do.
 	boolean done = false;
 	private HashMap<String, String> playerImgs = new HashMap <>();
-	private String playerImgPath = "resources/image/winterplayer.png"; //default cell background image.
+	private String playerImgPath = "resources/image/springplayer.png"; //default cell background image.
 	
 	/**
 	 * Constructor of Player.
@@ -104,48 +105,68 @@ public class Player{
 		if (this.frozen) {
 			return;
 		}
-		if ((direction.equals(ActionData.MoveDirection.UP.toString()) && !this.getCurrentCell().hasTopWall())
-			|| (direction.equals(ActionData.MoveDirection.DOWN.toString()) && !this.getCurrentCell().hasButtomWall())
-			|| (direction.equals(ActionData.MoveDirection.LEFT.toString()) && (!this.getCurrentCell().hasLeftWall() && this.getCurrentCell().getX() != 0))
-			|| (direction.equals(ActionData.MoveDirection.RIGHT.toString()) && (!this.getCurrentCell().hasRightWall() && this.getCurrentCell().getX()/this.getCurrentCell().getWidth() != gridMaze.getGrid().length - 1))) {
+		//we could define special direction to indicate the movement is from TeleportCell, but for simplicity, we ignore direction here
+		// that means, what ever the direction is, as long as the movement is from teleportCell, we do this
+		if (this.getCurrentCell() instanceof TeleportCell) {
 			//set previous cell to current cell
 			this.previousCell = this.getCurrentCell();
-			//collect item if old cell has item
-			if ((previousCell instanceof SquareCellWithItem)) {
-				if (((SquareCellWithItem) previousCell).hasItem()) {
-					//update player's score based on the value of item of just visited cell
-					changeScore(((SquareCellWithItem) previousCell).getItem().getValue());
-					if (((SquareCellWithItem) previousCell).getItem() instanceof Skull) {
-						numberOfTrap++;
-					} else {
-						numberOfGold++;
-					}
-					((SquareCellWithItem) previousCell).collectItem();
-				}
-			}
-			//update current cell to next cell according to move direction.
-			SquareCell newcell = null;
-			if (direction.equals(ActionData.MoveDirection.UP.toString())) {
-				newcell = gridMaze.getGrid()[previousCell.getX()/previousCell.getWidth()][(previousCell.getY()- previousCell.getWidth())/previousCell.getWidth()];
-			} else if (direction.equals(ActionData.MoveDirection.DOWN.toString())) {
-				newcell = gridMaze.getGrid()[(previousCell.getX())/previousCell.getWidth()][(previousCell.getY() + previousCell.getWidth())/previousCell.getWidth()];
-			} else if (direction.equals(ActionData.MoveDirection.LEFT.toString())) {
-				newcell = gridMaze.getGrid()[(previousCell.getX()- previousCell.getWidth())/previousCell.getWidth()][previousCell.getY()/previousCell.getWidth()];
-			} else if (direction.equals(ActionData.MoveDirection.RIGHT.toString())) {
-				newcell = gridMaze.getGrid()[(previousCell.getX() + previousCell.getWidth())/previousCell.getWidth()][previousCell.getY()/previousCell.getWidth()];
-			} else {
-				//shouldn't reach here.
-			}
-			this.setCurrentCell(newcell);
+			int gridNum = gridMaze.getGridNum();
+			Random randomGenerator = new Random();
+			int nextPosX = randomGenerator.nextInt(gridNum-1);
+			int nextPosY = randomGenerator.nextInt(gridNum-1);
+			this.setCurrentCell(gridMaze.getGrid()[nextPosX][nextPosY]);
 			done = true;
 			//since player moved a step, subtract score 1.
 			changeScore(stepCost);
 			numberOfStep++;
 			notifyAllPlayerMovementObervers(done);
 			done = false;
-		} else {
-			done = false;
-			notifyAllPlayerMovementObervers(done);
+		} 
+		// other types of SquareCell.
+		else {
+			if ((direction.equals(ActionData.MoveDirection.UP.toString()) && !this.getCurrentCell().hasTopWall())
+					|| (direction.equals(ActionData.MoveDirection.DOWN.toString()) && !this.getCurrentCell().hasButtomWall())
+					|| (direction.equals(ActionData.MoveDirection.LEFT.toString()) && (!this.getCurrentCell().hasLeftWall() && this.getCurrentCell().getX() != 0))
+					|| (direction.equals(ActionData.MoveDirection.RIGHT.toString()) && (!this.getCurrentCell().hasRightWall() && this.getCurrentCell().getX()/this.getCurrentCell().getWidth() != gridMaze.getGrid().length - 1))) {
+					//set previous cell to current cell
+					this.previousCell = this.getCurrentCell();
+					//collect item if old cell has item
+					if ((previousCell instanceof SquareCellWithItem)) {
+						if (((SquareCellWithItem) previousCell).hasItem()) {
+							//update player's score based on the value of item of just visited cell
+							changeScore(((SquareCellWithItem) previousCell).getItem().getValue());
+							if (((SquareCellWithItem) previousCell).getItem() instanceof Skull) {
+								numberOfTrap++;
+							} else {
+								numberOfGold++;
+							}
+							((SquareCellWithItem) previousCell).collectItem();
+						}
+					}
+					//update current cell to next cell according to move direction.
+					SquareCell newcell = null;
+					if (direction.equals(ActionData.MoveDirection.UP.toString())) {
+						newcell = gridMaze.getGrid()[previousCell.getX()/previousCell.getWidth()][(previousCell.getY()- previousCell.getWidth())/previousCell.getWidth()];
+					} else if (direction.equals(ActionData.MoveDirection.DOWN.toString())) {
+						newcell = gridMaze.getGrid()[(previousCell.getX())/previousCell.getWidth()][(previousCell.getY() + previousCell.getWidth())/previousCell.getWidth()];
+					} else if (direction.equals(ActionData.MoveDirection.LEFT.toString())) {
+						newcell = gridMaze.getGrid()[(previousCell.getX()- previousCell.getWidth())/previousCell.getWidth()][previousCell.getY()/previousCell.getWidth()];
+					} else if (direction.equals(ActionData.MoveDirection.RIGHT.toString())) {
+						newcell = gridMaze.getGrid()[(previousCell.getX() + previousCell.getWidth())/previousCell.getWidth()][previousCell.getY()/previousCell.getWidth()];
+					} else {
+						//shouldn't reach here.
+					}
+					this.setCurrentCell(newcell);
+					done = true;
+					//since player moved a step, subtract score 1.
+					changeScore(stepCost);
+					numberOfStep++;
+					notifyAllPlayerMovementObervers(done);
+					done = false;
+				} else {
+					done = false;
+					notifyAllPlayerMovementObervers(done);
+				}
 		}
 		if (isFinished()) {
 			freezePlayer();

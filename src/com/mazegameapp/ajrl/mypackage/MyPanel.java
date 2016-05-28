@@ -67,7 +67,13 @@ public class MyPanel extends JPanel implements KeyListener, PlayerMovementObserv
             canDrawMaze = false;
         } else {
         	if (playerMovement) {
-        		player.previousCell.paintCell(g);
+        		// paint rectangle from previous cell to current cell
+        		int x1 = player.previousCell.getX();
+        		int y1 = player.previousCell.getY();
+        		int x2 = player.cell.getX();
+        		int y2 = player.cell.getY();
+        		int w = player.cell.getWidth();
+        		paintRectangle(x1, y1, x2, y2, w, g);
         		player.paintPlayer(g);
         	}
         	playerMovement = false;
@@ -142,5 +148,40 @@ public class MyPanel extends JPanel implements KeyListener, PlayerMovementObserv
 	public void finishSetting() {
 		setCanDrawMaze(true);
         repaint(0,0,this.getSize().width,this.getSize().width);
+	}
+	
+	private void paintRectangle(int x1, int y1, int x2, int y2, int width, Graphics g){
+		SquareCell[][] grid = gridMaze.getGrid();
+		//current cell is in the south east corner of rectangle
+		if (x2 >= x1 && y2 >= y1) {
+			for (int i = x1/width; i <= x2/width; i = i + 1) {
+				for (int j = y1/width; j <= y2/width; j = j + 1) {
+					grid[i][j].paintCell(g);
+				}
+			}
+		} else if (x2 >= x1 && y2 <= y1) {
+			//north east
+			for (int i = x1/width; i <= x2/width; i = i + 1) {
+				for (int j = y1/width; j >= y2/width; j = j - 1) {
+					grid[i][j].paintCell(g);
+				}
+			}
+		} else if (x2 <= x1 && y2 >= y1) {
+			//south west
+			for (int i = x1/width; i >= x2/width; i = i - 1) {
+				for (int j = y1/width; j <= y2/width; j = j + 1) {
+					grid[i][j].paintCell(g);
+				}
+			}
+		} else if (x1 >= x2 && y1 >= y2){
+			//north west
+			for (int i = x1/width; i >= x2/width; i = i - 1) {
+				for (int j = y1/width; j >= y2/width; j = j - 1) {
+					grid[i][j].paintCell(g);
+				}
+			}
+		} else {
+			//shouldn't be here.
+		}
 	}
 }
