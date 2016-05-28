@@ -58,7 +58,7 @@ public class MazeGameController implements ControllerInterface{
 	private void changeDifficulty(String level) {
 		if (level.equals(ActionData.Difficultylevel.BEGINNER.toString())) {
 			gridMaze.setGridNum(10);
-			gridMaze.setCellRatio(60,25,10,5);
+			gridMaze.setCellRatio(60,28,10,2);
 		} else if (level.equals(ActionData.Difficultylevel.INTERMEDIATE.toString())) {
 			// set the grid size to 30 * 30
 			gridMaze.setGridNum(20);

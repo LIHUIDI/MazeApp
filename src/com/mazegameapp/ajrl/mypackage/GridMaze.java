@@ -17,9 +17,9 @@ public class GridMaze {
 	private int gridNum = DEFAULT_GRID_SIZE;
 	
 	private static final int DEFAULT_RATIO_COMMON_CELL = 60;
-	private static final int DEFAULT_RATIO_GOLD_CELL = 25;
+	private static final int DEFAULT_RATIO_GOLD_CELL = 28;
 	private static final int DEFAULT_RATIO_TRAP_CELL = 10;
-	private static final int DEFAULT_RATIO_RIFT_CELL = 5;
+	private static final int DEFAULT_RATIO_RIFT_CELL = 2;
 	private int ratioOfCommonCell = DEFAULT_RATIO_COMMON_CELL;
 	private int ratioOfGoldCell = DEFAULT_RATIO_GOLD_CELL;
 	private int ratioOfTrapCell = DEFAULT_RATIO_TRAP_CELL;
